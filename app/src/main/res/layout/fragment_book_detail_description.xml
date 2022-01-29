@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:scrollbars="none"
+    android:nestedScrollingEnabled="true"
+    android:layout_height="match_parent"
+    tools:context=".ui.book_detail_screen.screen.description.DescriptionFragment">
+
+
+        <TextView
+            android:id="@+id/textdescription"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/literata_light"
+            android:padding="20dp"
+            android:textSize="@dimen/text20" />
+
+</ScrollView>

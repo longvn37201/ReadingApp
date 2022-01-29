@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.book_detail_screen.BookDetailFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax">
+
+                <View
+                    android:id="@+id/toolbarHeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:actionBarSize"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageBackground"
+                    android:layout_width="match_parent"
+                    android:foreground="#57FFFFFF"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageCurrentBook"
+                    android:layout_width="120dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginStart="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbarHeight"
+                    app:shapeAppearanceOverlay="@style/rounded_4corner" />
+
+                <TextView
+                    android:id="@+id/textBookName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_bold"
+                    android:maxLines="3"
+                    android:text="Tôi thấy hoa vàng trêâ a a a a a a a a a an cỏ xanh"
+                    android:textSize="@dimen/text20"
+                    app:layout_constraintBottom_toTopOf="@id/textAuthor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageCurrentBook"
+                    app:layout_constraintTop_toBottomOf="@id/toolbarHeight"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/textAuthor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Tác giả: Haruki Murakami"
+                    android:textSize="@dimen/text16"
+                    app:layout_constraintBottom_toTopOf="@id/textCategory"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageCurrentBook"
+                    app:layout_constraintTop_toBottomOf="@+id/textBookName" />
+
+                <TextView
+                    android:id="@+id/textCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:maxLines="2"
+                    android:text="Thể loại: Ngôn Tình, Việt Nam, Kiếm Hiệp, Khác"
+                    android:textSize="@dimen/text16"
+                    app:layout_constraintBottom_toTopOf="@id/textChapterNumber"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageCurrentBook"
+                    app:layout_constraintTop_toBottomOf="@+id/textAuthor" />
+
+
+                <TextView
+                    android:id="@+id/textChapterNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:maxLines="2"
+                    android:text="Số chương: 100"
+                    android:textSize="@dimen/text16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageCurrentBook"
+                    app:layout_constraintTop_toBottomOf="@+id/textCategory" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:actionBarSize"
+                app:layout_collapseMode="pin" />
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/layoutTab"
+            style="@style/CustomTabLayout2"
+            android:layout_width="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+             />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTab" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

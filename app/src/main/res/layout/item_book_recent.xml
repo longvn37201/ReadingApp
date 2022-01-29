@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.imageview.ShapeableImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/imageBookRecent"
+    android:layout_width="110dp"
+    android:layout_height="175dp"
+    android:layout_marginEnd="10dp"
+    android:adjustViewBounds="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:scaleType="fitXY"
+    app:shapeAppearanceOverlay="@style/rounded_4corner" />

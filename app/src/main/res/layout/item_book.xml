@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:clickable="true"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/book_item_background">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageBook"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/rounded_4corner" />
+
+    <TextView
+        android:id="@+id/textBookName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginHorizontal="20dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_medium"
+        app:layout_constraintBottom_toTopOf="@id/textAuthor"
+        android:maxLines="2"
+        android:text="Tôi thấy hoa vàng trên cỏ xanh"
+        android:textSize="@dimen/text16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageBook"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textAuthor"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@id/textCategory"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/poppins_light"
+        android:text="Tác giả: Haruki Murakami"
+        app:layout_constraintStart_toEndOf="@+id/imageBook"
+        app:layout_constraintTop_toBottomOf="@+id/textBookName" />
+
+    <TextView
+        android:id="@+id/textCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:layout_marginHorizontal="20dp"
+        android:text="Thể loại: Ngôn Tình"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageBook"
+        app:layout_constraintTop_toBottomOf="@+id/textAuthor" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

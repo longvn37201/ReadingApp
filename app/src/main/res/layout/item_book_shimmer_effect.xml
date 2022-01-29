@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:clickable="true"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/shimmer_home_item_background">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageBook0"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:background="@android:color/darker_gray"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/rounded_4corner" />
+
+    <TextView
+        android:id="@+id/textBookName0"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginHorizontal="20dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_medium"
+        app:layout_constraintBottom_toTopOf="@id/textAuthor0"
+        android:maxLines="2"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/text16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageBook0"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textAuthor0"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@id/textCategory0"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/darker_gray"
+        android:fontFamily="@font/poppins_light"
+        android:text="Tác giả: Haruki Murakami"
+        app:layout_constraintStart_toEndOf="@+id/imageBook0"
+        app:layout_constraintTop_toBottomOf="@+id/textBookName0" />
+
+    <TextView
+        android:id="@+id/textCategory0"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginHorizontal="20dp"
+        android:text="Thể loại: Ngôn Tình"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageBook0"
+        app:layout_constraintTop_toBottomOf="@+id/textAuthor0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
