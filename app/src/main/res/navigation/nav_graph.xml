@@ -32,5 +32,17 @@
         <argument
             android:name="currentBook"
             app:argType="vulong.book_app.model.remote_api.Book" />
+        <action
+            android:id="@+id/action_bookDetailFragment_to_readBookFragment"
+            app:destination="@id/readBookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/readBookFragment"
+        android:name="vulong.book_app.ui.read_screen.ReadBookFragment"
+        android:label="fragment_read_book"
+        tools:layout="@layout/fragment_read_book" >
+        <argument
+            android:name="currentRead"
+            app:argType="vulong.book_app.model.remote_api.Read" />
     </fragment>
 </navigation>

@@ -5,6 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import vulong.book_app.model.remote_api.Book
 import vulong.book_app.model.remote_api.BookDescription
+import vulong.book_app.model.remote_api.Chapters
 
 interface BookApi {
 
@@ -32,11 +33,16 @@ interface BookApi {
         @Query("publicSource") publicSource: String,
     ): Response<BookDescription>
 
-    @GET("/chapter")
-    suspend fun getChapter(
+//    @GET("/chapter")
+//    suspend fun getChapter(
+//        @Query("publicSource") publicSource: String,
+//        @Query("chapterNumber") chapterNumber: String,
+//    ): Response<Chapter>
+
+    @GET("/getAllChapters")
+    suspend fun getAllChapters(
         @Query("publicSource") publicSource: String,
-        @Query("chapterNumber") chapterNumber: String,
-    ): String
+    ): Response<Chapters>
 
     @GET("/search")
     suspend fun searchBooks(

@@ -100,4 +100,8 @@ object Helper {
         menuLayoutParams.setMargins(0, 0, 0, margin)
         this.layoutParams = menuLayoutParams
     }
+
+    fun Context.dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
 }

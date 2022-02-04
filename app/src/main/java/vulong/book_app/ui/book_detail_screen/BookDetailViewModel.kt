@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import vulong.book_app.model.remote_api.Book
+import vulong.book_app.model.remote_api.Read
 import vulong.book_app.repository.BookRepository
 import vulong.book_app.util.State
 
@@ -13,6 +14,8 @@ class BookDetailViewModel(
 ) : ViewModel() {
 
     val currentBook = MutableLiveData<Book>()
+    val currentRead = MutableLiveData<Read>()
+
     val textDescription = MutableLiveData<String?>(null)
     val state = MutableLiveData<State>(State.Loading)
 

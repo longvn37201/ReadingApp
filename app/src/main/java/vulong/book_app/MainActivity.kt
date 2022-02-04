@@ -14,12 +14,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+
         setupNavigationComponent()
+
     }
+
 
 
     private fun setupNavigationComponent() {

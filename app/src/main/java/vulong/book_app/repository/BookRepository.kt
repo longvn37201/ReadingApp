@@ -24,10 +24,14 @@ class BookRepository {
         publicSource: String,
     ) = RetrofitInstance.api.getDescription(publicSource)
 
-    suspend fun getChapter(
+//    suspend fun getChapter(
+//        publicSource: String,
+//        chapterNumber: String,
+//    ) = RetrofitInstance.api.getChapter(publicSource, chapterNumber)
+
+    suspend fun getAllChapters(
         publicSource: String,
-        chapterNumber: String,
-    ) = RetrofitInstance.api.getChapter(publicSource, chapterNumber)
+    ) = RetrofitInstance.api.getAllChapters(publicSource)
 
     suspend fun searchBooks(
         query: String,

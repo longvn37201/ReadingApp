@@ -3,7 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/drawable-v24/background_heart_filled.xml" value="0.131" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/drawable/background_heart_filled.xml" value="0.131" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/drawable/bottom_corner.xml" value="0.1445" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/drawable/category_item_background.xml" value="0.1445" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/drawable/ic_heart_filled.xml" value="0.131" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/drawable/ic_heart_outline.xml" value="0.131" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/drawable/test.xml" value="0.131" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/activity_main.xml" value="0.184375" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/fragment_book_detail.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/fragment_book_detail_description.xml" value="0.184375" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/fragment_main_bookshelf.xml" value="0.184375" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/fragment_main_bookshelf_category.xml" value="0.184375" />
         <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/fragment_main_setting.xml" value="0.184375" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/fragment_read_book.xml" value="0.184375" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/fragment_read_book_chapter.xml" value="0.184375" />
+        <entry key="..\:/Users/vungoclong/Desktop/AndroidProject/BookApp/app/src/main/res/layout/item_read_book_chapter.xml" value="0.184375" />
         <entry key="..\:/Users/vungoclong/Desktop/BookApp/app/src/main/res/drawable/background_tablayout.xml" value="0.1445" />
         <entry key="..\:/Users/vungoclong/Desktop/BookApp/app/src/main/res/drawable/book_item_background.xml" value="0.12" />
         <entry key="..\:/Users/vungoclong/Desktop/BookApp/app/src/main/res/drawable/bottom_nav_background.xml" value="0.1445" />

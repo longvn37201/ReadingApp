@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import jp.wasabeef.glide.transformations.BlurTransformation
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentBookDetailBinding
+import vulong.book_app.model.remote_api.Read
 import vulong.book_app.util.Helper
 import vulong.book_app.util.Helper.setMarginBottom
 import vulong.book_app.util.Helper.setMarginTop
@@ -25,10 +26,8 @@ import vulong.book_app.util.Helper.setMarginTop
 class BookDetailFragment() : Fragment() {
 
     private val args: BookDetailFragmentArgs by navArgs()
-
     private val viewModel: BookDetailViewModel by activityViewModels()
     private lateinit var binding: FragmentBookDetailBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +41,18 @@ class BookDetailFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.currentBook.value = args.currentBook
+        viewModel.currentRead.value = Read(book = viewModel.currentBook.value!!, currentChapter = 1)
 
         setUpToolbar(title = viewModel.currentBook.value!!.name)
 
         setUpData()
+
+        binding.buttonRead.setOnClickListener {
+            val action =
+                BookDetailFragmentDirections
+                    .actionBookDetailFragmentToReadBookFragment(viewModel.currentRead.value!!)
+            findNavController().navigate(action)
+        }
 
     }
 
@@ -56,7 +63,6 @@ class BookDetailFragment() : Fragment() {
                 .with(root.context)
                 .load(Helper.convertPublicSourceToImageUrl(viewModel.currentBook.value!!.publicSource))
                 .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
-                .placeholder(R.drawable.image_placeholder)
                 .error(R.drawable.image_error)
                 .into(imageBackground)
 
@@ -110,26 +116,25 @@ class BookDetailFragment() : Fragment() {
                 }
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbarLayout.title = title
-                    binding.imageCurrentBook.visibility=View.INVISIBLE
-                    binding.textAuthor.visibility=View.INVISIBLE
-                    binding.textBookName.visibility=View.INVISIBLE
-                    binding.textChapterNumber.visibility=View.INVISIBLE
-                    binding.textCategory.visibility=View.INVISIBLE
+                    binding.imageCurrentBook.visibility = View.INVISIBLE
+                    binding.textAuthor.visibility = View.INVISIBLE
+                    binding.textBookName.visibility = View.INVISIBLE
+                    binding.textChapterNumber.visibility = View.INVISIBLE
+                    binding.textCategory.visibility = View.INVISIBLE
                     isShow = true
                 } else if (isShow) {
                     //careful there should a space between double quote otherwise it wont work
                     collapsingToolbarLayout.title = " "
-                    binding.imageCurrentBook.visibility=View.VISIBLE
-                    binding.textAuthor.visibility=View.VISIBLE
-                    binding.textBookName.visibility=View.VISIBLE
-                    binding.textChapterNumber.visibility=View.VISIBLE
-                    binding.textCategory.visibility=View.VISIBLE
+                    binding.imageCurrentBook.visibility = View.VISIBLE
+                    binding.textAuthor.visibility = View.VISIBLE
+                    binding.textBookName.visibility = View.VISIBLE
+                    binding.textChapterNumber.visibility = View.VISIBLE
+                    binding.textCategory.visibility = View.VISIBLE
                     isShow = false
                 }
             })
         }
     }
-
 
 
 }
