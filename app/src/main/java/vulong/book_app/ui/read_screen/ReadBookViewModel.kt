@@ -5,16 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import vulong.book_app.model.remote_api.Chapters
-import vulong.book_app.model.remote_api.Read
 import vulong.book_app.repository.BookRepository
-import vulong.book_app.util.State
+import vulong.book_app.util.model.SavedStatus
+import vulong.book_app.util.model.State
 
 class ReadBookViewModel(
     private val repository: BookRepository = BookRepository(),
 ) : ViewModel() {
 
-    val currentRead = MutableLiveData<Read>()
-    val state = MutableLiveData<State>()
+    val state = MutableLiveData<State>(State.Loading)
+
+    val savedStatus = MutableLiveData<SavedStatus>()
+
     val chapters = MutableLiveData<Chapters>()
     val isShowSystemBar = MutableLiveData<Boolean>(false)
 
@@ -23,7 +25,7 @@ class ReadBookViewModel(
             state.value = State.Loading
             try {
                 val response = repository.getAllChapters(
-                    currentRead.value!!.book.publicSource,
+                    savedStatus.value!!.book.publicSource,
                 )
                 if (response.isSuccessful) {
                     chapters.value = response.body()

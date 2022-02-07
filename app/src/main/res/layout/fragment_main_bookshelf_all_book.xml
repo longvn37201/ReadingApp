@@ -38,21 +38,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
         android:visibility="gone"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Có lỗi xảy ra, vui lòng thử lại" />
+            android:layout_marginTop="10dp"
+            android:text="Lỗi kết nối" />
 
         <Button
             android:id="@+id/buttonReload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tải lại"
+            android:text="Thử lại"
             android:textAllCaps="false" />
     </LinearLayout>
 

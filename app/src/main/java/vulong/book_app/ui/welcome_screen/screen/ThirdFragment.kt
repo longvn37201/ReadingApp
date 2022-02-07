@@ -1,9 +1,7 @@
 package vulong.book_app.ui.welcome_screen.screen
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,9 +24,10 @@ import com.google.firebase.ktx.Firebase
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentWelcomeThirdBinding
 import vulong.book_app.model.firebase.User
-import vulong.book_app.util.Constant
 import vulong.book_app.util.Constant.DB_URL
 import vulong.book_app.util.Constant.SERVER_CLIENT_ID
+import vulong.book_app.util.Constant.SHOW_WELCOME_SCREEN
+import vulong.book_app.util.SharedPrefUtils
 
 
 class ThirdFragment : Fragment() {
@@ -171,12 +170,13 @@ class ThirdFragment : Fragment() {
     }
 
     private fun navigateToHome() {
-        val editor: SharedPreferences.Editor =
-            requireContext()
-                .getSharedPreferences(Constant.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
-                .edit()
-        editor.putBoolean(Constant.SHOW_WELCOME_SCREEN, false)
-        editor.apply()
+//        val editor: SharedPreferences.Editor =
+//            requireContext()
+//                .getSharedPreferences(Constant.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
+//                .edit()
+//        editor.putBoolean(Constant.SHOW_WELCOME_SCREEN, false)
+//        editor.apply()
+        SharedPrefUtils.saveBoolean(requireContext(), SHOW_WELCOME_SCREEN, false)
         findNavController().navigate(R.id.action_welcomeFragment_to_mainFragment)
     }
 

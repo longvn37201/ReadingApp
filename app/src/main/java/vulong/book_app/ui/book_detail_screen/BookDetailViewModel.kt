@@ -5,22 +5,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import vulong.book_app.model.remote_api.Book
-import vulong.book_app.model.remote_api.Read
 import vulong.book_app.repository.BookRepository
-import vulong.book_app.util.State
+import vulong.book_app.util.model.SavedStatus
+import vulong.book_app.util.model.State
 
 class BookDetailViewModel(
     private val repository: BookRepository = BookRepository(),
 ) : ViewModel() {
 
+    val state = MutableLiveData<State>(State.Loading)
+
     val currentBook = MutableLiveData<Book>()
-    val currentRead = MutableLiveData<Read>()
+    val savedStatus = MutableLiveData<SavedStatus>()
 
     val textDescription = MutableLiveData<String?>(null)
-    val state = MutableLiveData<State>(State.Loading)
 
     fun getTextDescription() {
         viewModelScope.launch {
+            state.value = State.Loading
             try {
                 val response = repository.getDescription(currentBook.value!!.publicSource)
                 if (response.isSuccessful) {

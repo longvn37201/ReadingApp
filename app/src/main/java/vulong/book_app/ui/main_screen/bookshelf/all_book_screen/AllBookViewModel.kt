@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import vulong.book_app.model.remote_api.Book
 import vulong.book_app.repository.BookRepository
-import vulong.book_app.util.State
-import vulong.book_app.util.State.*
+import vulong.book_app.util.model.State
+import vulong.book_app.util.model.State.*
 
 class AllBookViewModel(
     private val repository: BookRepository = BookRepository(),

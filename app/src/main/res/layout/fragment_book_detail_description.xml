@@ -1,19 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:scrollbars="none"
-    android:nestedScrollingEnabled="true"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     tools:context=".ui.book_detail_screen.screen.description.DescriptionFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textdescription"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/literata_light"
             android:padding="20dp"
-            android:textSize="@dimen/text20" />
+            android:textSize="@dimen/text20"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</ScrollView>
+        <LinearLayout
+            android:id="@+id/layoutError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Lỗi kết nối" />
+
+            <Button
+                android:id="@+id/buttonReload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thử lại"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

@@ -42,7 +42,7 @@
         android:label="fragment_read_book"
         tools:layout="@layout/fragment_read_book" >
         <argument
-            android:name="currentRead"
-            app:argType="vulong.book_app.model.remote_api.Read" />
+            android:name="savedStatus"
+            app:argType="vulong.book_app.util.model.SavedStatus" />
     </fragment>
 </navigation>

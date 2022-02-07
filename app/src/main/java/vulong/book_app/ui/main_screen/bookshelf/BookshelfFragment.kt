@@ -30,7 +30,7 @@ class BookshelfFragment : Fragment() {
             this
         )
         binding.pager.adapter = adapter
-        TabLayoutMediator(binding.layoutTab, binding.pager) { tab, position ->
+        TabLayoutMediator(binding.layoutTab, binding.pager, true) { tab, position ->
             if (position == 0) {
                 tab.text = "Tất Cả"
             } else {

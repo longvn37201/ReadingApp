@@ -1,4 +1,4 @@
-package vulong.book_app.util
+package vulong.book_app.util.model
 
 sealed class State {
     object Success : State()
