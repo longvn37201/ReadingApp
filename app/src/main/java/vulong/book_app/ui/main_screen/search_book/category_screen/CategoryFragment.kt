@@ -1,4 +1,4 @@
-package vulong.book_app.ui.main_screen.bookshelf.category_screen
+package vulong.book_app.ui.main_screen.search_book.category_screen
 
 import android.os.Bundle
 import android.util.Log

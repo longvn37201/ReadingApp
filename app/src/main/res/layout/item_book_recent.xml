@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.imageview.ShapeableImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/imageBookRecent"
-    android:layout_width="110dp"
-    android:layout_height="175dp"
-    android:layout_marginEnd="10dp"
-    android:adjustViewBounds="true"
-    android:foreground="?attr/selectableItemBackground"
-    android:clickable="true"
-    android:scaleType="fitXY"
-    app:shapeAppearanceOverlay="@style/rounded_4corner" />
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/book_item_background"
+    android:clickable="true">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageBook"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/rounded_4corner" />
+
+    <TextView
+        android:id="@+id/textBookName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_medium"
+        android:maxLines="2"
+        android:textSize="@dimen/text16"
+        app:layout_constraintBottom_toTopOf="@id/textChapter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageBook"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/textChapter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:textSize="@dimen/text14"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/textBookName"
+        app:layout_constraintTop_toBottomOf="@id/textBookName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

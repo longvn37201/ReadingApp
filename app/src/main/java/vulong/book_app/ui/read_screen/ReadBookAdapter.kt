@@ -6,11 +6,11 @@ import android.widget.ScrollView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import vulong.book_app.databinding.ItemReadBookChapterBinding
-import vulong.book_app.model.remote_api.Chapters
+import vulong.book_app.model.remote_api.Chapter
 
 
 class ReadBookAdapter(
-    private val chapters: Chapters,
+    private val chapters: ArrayList<Chapter>,
     val clickListener: (Int) -> Unit,
     val scrollListener: (Int) -> Unit,
     var pageSaved: Int,
@@ -21,18 +21,17 @@ class ReadBookAdapter(
         val binding: ItemReadBookChapterBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun setData(content: String, position: Int) {
+        fun setData(chapter: Chapter) {
             binding.scrollView.fullScroll(ScrollView.FOCUS_UP);
-            binding.textContent.text = "CHƯƠNG ${position + 1}\n$content"
+            binding.textContent.text = "${chapter.name}\n\n${chapter.content}"
         }
 
         fun scrollToSavedY() {
             CoroutineScope(Dispatchers.IO).launch {
                 delay(500)
                 withContext(Dispatchers.Main) {
-//                    binding.scrollView.scrollY = binding.scrollView.scrollY + scrollYSaved
-                    binding.scrollView.smoothScrollTo(0,binding.scrollView.scrollY + scrollYSaved)
-                    scrollYSaved=0
+                    binding.scrollView.smoothScrollTo(0, binding.scrollView.scrollY + scrollYSaved)
+                    scrollYSaved = 0
                 }
             }
         }
@@ -51,20 +50,19 @@ class ReadBookAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(chapters.arrayChapter[position], position)
+        holder.setData(chapters[position])
         holder.binding.textContent.setOnClickListener {
             clickListener(position)
         }
         holder.binding.scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             scrollListener(scrollY)
         }
-
         if (position == pageSaved && scrollYSaved != 0) {
             holder.scrollToSavedY()
         }
     }
 
     override fun getItemCount(): Int {
-        return chapters.arrayChapter.size
+        return chapters.size
     }
 }

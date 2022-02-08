@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import vulong.book_app.databinding.FragmentBookDetailDescriptionBinding
 import vulong.book_app.ui.book_detail_screen.BookDetailViewModel
-import vulong.book_app.util.model.State
 
 class DescriptionFragment : Fragment() {
 
@@ -26,32 +25,33 @@ class DescriptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getTextDescription()
-
-        viewModel.textDescription.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.textdescription.text = it
-            }
-        }
-
-        viewModel.state.observe(viewLifecycleOwner) {
-            when (it) {
-                is State.Success -> {
-                    binding.textdescription.visibility = View.VISIBLE
-                    binding.layoutError.visibility = View.GONE
-                }
-                is State.Error -> {
-                    binding.textdescription.visibility = View.GONE
-                    binding.layoutError.visibility = View.VISIBLE
-                }
-                is State.Loading -> {
-
-                }
-            }
-        }
-
-        binding.buttonReload.setOnClickListener {
-            viewModel.getTextDescription()
-        }
+        binding.textdescription.text = viewModel.currentBook!!.description
+//        viewModel.getTextDescription()
+//
+//        viewModel.textDescription.observe(viewLifecycleOwner) {
+//            if (it != null) {
+//                binding.textdescription.text = it
+//            }
+//        }
+//
+//        viewModel.state.observe(viewLifecycleOwner) {
+//            when (it) {
+//                is State.Success -> {
+//                    binding.textdescription.visibility = View.VISIBLE
+//                    binding.layoutError.visibility = View.GONE
+//                }
+//                is State.Error -> {
+//                    binding.textdescription.visibility = View.GONE
+//                    binding.layoutError.visibility = View.VISIBLE
+//                }
+//                is State.Loading -> {
+//
+//                }
+//            }
+//        }
+//
+//        binding.buttonReload.setOnClickListener {
+//            viewModel.getTextDescription()
+//        }
     }
 }

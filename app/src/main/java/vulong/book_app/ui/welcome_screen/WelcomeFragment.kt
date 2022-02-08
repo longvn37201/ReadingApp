@@ -14,6 +14,7 @@ import vulong.book_app.util.Helper.systemBarInset
 
 class WelcomeFragment : Fragment() {
 
+
     private lateinit var binding: FragmentWelcomeBinding
 
     override fun onCreateView(

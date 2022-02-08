@@ -8,36 +8,35 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import vulong.book_app.databinding.FragmentMainBookshelfBinding
 import vulong.book_app.ui.main_screen.bookshelf.all_book_screen.AllBookFragment
-import vulong.book_app.ui.main_screen.bookshelf.category_screen.CategoryFragment
+import vulong.book_app.ui.main_screen.bookshelf.read_recent_screen.RecentReadFragment
 
 class BookshelfFragment : Fragment() {
 
 
-    private lateinit var binding: FragmentMainBookshelfBinding
+    private var binding: FragmentMainBookshelfBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMainBookshelfBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = BookShelfAdapter(
-            arrayListOf(AllBookFragment(), CategoryFragment()),
+            arrayListOf(AllBookFragment(), RecentReadFragment()),
             this
         )
-        binding.pager.adapter = adapter
-        TabLayoutMediator(binding.layoutTab, binding.pager, true) { tab, position ->
+        binding!!.pager.adapter = adapter
+        TabLayoutMediator(binding!!.layoutTab, binding!!.pager, true) { tab, position ->
             if (position == 0) {
                 tab.text = "Tất Cả"
             } else {
-                tab.text = "Thể Loại"
+                tab.text = "Đang Đọc"
             }
         }.attach()
-
     }
 
 }

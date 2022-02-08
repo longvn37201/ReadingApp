@@ -2,6 +2,7 @@ package vulong.book_app.util
 
 object Constant {
     const val SHARED_PREFERENCE_NAME = "PREF"
+    const val BOOK_RECENT_DB_NAME = "READ_BOOK_PROGRESS_DB"
     const val CATEGORY_FILE_NAME = "category.txt"
     const val SHOW_WELCOME_SCREEN = "welcome_screen"
     const val DB_URL = "https://book-app-961f6-default-rtdb.asia-southeast1.firebasedatabase.app"

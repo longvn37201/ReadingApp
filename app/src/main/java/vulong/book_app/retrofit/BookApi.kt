@@ -9,39 +9,33 @@ import vulong.book_app.model.remote_api.Chapters
 
 interface BookApi {
 
-    @GET("/books")
-    suspend fun getAllBooks(): Response<ArrayList<Book>>
+    @GET("/getAllBook")
+    suspend fun getAllBook(): Response<ArrayList<Book>>
 
-    @GET("/books")
+    @GET("/getAllBook")
     suspend fun getBooksByLimit(
         @Query("skip") skip: String,
         @Query("take") take: String,
     ): Response<ArrayList<Book>>
 
-    @GET("/booksByCategory")
+    @GET("/getBooksByCategory")
     suspend fun getBooksByCategory(
         @Query("category") category: String,
     ): Response<ArrayList<Book>>
 
     @GET("/booksByCategory")
     suspend fun getBook(
-        @Query("publicSource") publicSource: String,
+        @Query("id") id: String,
     ): Response<Book>
 
     @GET("/description")
     suspend fun getDescription(
-        @Query("publicSource") publicSource: String,
+        @Query("id") id: String,
     ): Response<BookDescription>
-
-//    @GET("/chapter")
-//    suspend fun getChapter(
-//        @Query("publicSource") publicSource: String,
-//        @Query("chapterNumber") chapterNumber: String,
-//    ): Response<Chapter>
 
     @GET("/getAllChapters")
     suspend fun getAllChapters(
-        @Query("publicSource") publicSource: String,
+        @Query("id") id: String,
     ): Response<Chapters>
 
     @GET("/search")

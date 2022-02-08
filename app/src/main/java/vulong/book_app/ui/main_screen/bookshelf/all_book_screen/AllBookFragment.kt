@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import vulong.book_app.databinding.FragmentMainBookshelfAllBookBinding
 import vulong.book_app.ui.main_screen.MainFragmentDirections
+import vulong.book_app.ui.main_screen.MainScreenViewModel
 import vulong.book_app.util.model.State.*
 
 class AllBookFragment : Fragment() {
 
 
-    private val viewModel: AllBookViewModel by viewModels()
+    private val viewModel: MainScreenViewModel by activityViewModels()
     private var binding: FragmentMainBookshelfAllBookBinding? = null
     private var isSetupView = false
     private lateinit var adapter: BookAdapter
@@ -32,31 +33,29 @@ class AllBookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!isSetupView) {
 
+        if (!isSetupView) {
             isSetupView = true
             binding!!.buttonReload.setOnClickListener {
-                viewModel.getBooks()
+                viewModel.getAllBook()
             }
-
-            viewModel.state.observe(viewLifecycleOwner) {
+            viewModel.allBookState.observe(viewLifecycleOwner) {
                 setData()
             }
         }
-
 
     }
 
     private fun setData() {
         binding!!.apply {
-            when (viewModel.state.value) {
+            when (viewModel.allBookState.value) {
                 is Loading -> {
                     layoutLoadingShimmer.visibility = View.VISIBLE
                     recyclerViewAllBook.visibility = View.GONE
                     layoutError.visibility = View.GONE
                 }
                 is Success -> {
-                    adapter = BookAdapter(viewModel.allBooks.value!!, onBookItemClick)
+                    adapter = BookAdapter(viewModel.listBook.value!!, onBookItemClick)
                     recyclerViewAllBook.adapter = adapter
                     recyclerViewAllBook.layoutManager =
                         LinearLayoutManager(requireContext())
@@ -65,7 +64,7 @@ class AllBookFragment : Fragment() {
                     layoutLoadingShimmer.visibility = View.GONE
                 }
                 is Error -> {
-                    val state = viewModel.state.value as Error
+                    val state = viewModel.allBookState.value as Error
                     textError.text = state.errorMessage
                     layoutError.visibility = View.VISIBLE
                     recyclerViewAllBook.visibility = View.GONE
@@ -78,8 +77,8 @@ class AllBookFragment : Fragment() {
     }
 
     private val onBookItemClick: (Int) -> Unit = { index ->
-        val currentBook = viewModel.allBooks.value!![index]
-        val action = MainFragmentDirections.actionMainFragmentToBookDetailFragment(currentBook)
+        val action =
+            MainFragmentDirections.actionMainFragmentToBookDetailFragment(viewModel.listBook.value!![index])
         findNavController().navigate(action)
     }
 

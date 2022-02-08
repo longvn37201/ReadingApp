@@ -9,7 +9,6 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true" />
@@ -56,44 +55,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/textError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Lỗi kết nối" />
-
-        <Button
-            android:id="@+id/buttonReload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thử lại"
-            android:textAllCaps="false" />
-    </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/loadingProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/main"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

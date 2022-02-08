@@ -1,40 +1,30 @@
 package vulong.book_app.ui.book_detail_screen
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import vulong.book_app.local_db.BookRecentDatabase
+import vulong.book_app.model.local_db.ReadBookProgress
 import vulong.book_app.model.remote_api.Book
-import vulong.book_app.repository.BookRepository
-import vulong.book_app.util.model.SavedStatus
 import vulong.book_app.util.model.State
 
-class BookDetailViewModel(
-    private val repository: BookRepository = BookRepository(),
-) : ViewModel() {
+class BookDetailViewModel() : ViewModel() {
 
-    val state = MutableLiveData<State>(State.Loading)
+    var currentBook: Book? = null
+    var readBookProcess: ReadBookProgress? = null
+    var readBookProcessState = MutableLiveData<State>()
 
-    val currentBook = MutableLiveData<Book>()
-    val savedStatus = MutableLiveData<SavedStatus>()
-
-    val textDescription = MutableLiveData<String?>(null)
-
-    fun getTextDescription() {
+    fun getCurrentBookProgress(context: Context) {
         viewModelScope.launch {
-            state.value = State.Loading
-            try {
-                val response = repository.getDescription(currentBook.value!!.publicSource)
-                if (response.isSuccessful) {
-                    val bookDescription = response.body()!!
-                    textDescription.value = bookDescription.description
-                    state.value = State.Success
-                } else {
-                    state.value = State.Error("Lỗi tải mô tả")
-                }
-            } catch (e: Exception) {
-                state.value = State.Error("Lỗi tải mô tả")
-            }
+            readBookProcessState.value = State.Loading
+            readBookProcess =
+                BookRecentDatabase.getInstance(context)
+                    .bookRecentDAO()
+                    .getBookProgress(currentBook!!.id)
+            readBookProcessState.value = State.Success
         }
     }
+
 }

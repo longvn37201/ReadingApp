@@ -14,8 +14,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 import vulong.book_app.databinding.FragmentReadBookBinding
-import vulong.book_app.util.SharedPrefUtils
-import vulong.book_app.util.model.State
 
 
 class ReadBookFragment : Fragment() {
@@ -24,8 +22,6 @@ class ReadBookFragment : Fragment() {
     private val args: ReadBookFragmentArgs by navArgs()
     private val viewModel: ReadBookViewModel by activityViewModels()
     private lateinit var binding: FragmentReadBookBinding
-    private var scrollY: Int = 0
-    private var currentPage: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,109 +35,83 @@ class ReadBookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.savedStatus.value = args.savedStatus
-        currentPage = viewModel.savedStatus.value!!.page
+        viewModel.currentBook = args.currentBook
+        viewModel.currentBookProcess = args.currentBookProgress
 
-        viewModel.getAllChapters()
+        setData()
 
-        //display state
-        viewModel.state.observe(viewLifecycleOwner) {
-            when (it) {
-                is State.Success -> {
-                    binding.pager.visibility = View.VISIBLE
-                    binding.loadingProgressBar.visibility = View.GONE
-                    binding.layoutError.visibility = View.GONE
-                }
-                is State.Error -> {
-                    binding.pager.visibility = View.GONE
-                    binding.loadingProgressBar.visibility = View.GONE
-                    binding.layoutError.visibility = View.VISIBLE
-                }
-                is State.Loading -> {
-                    binding.pager.visibility = View.GONE
-                    binding.loadingProgressBar.visibility = View.VISIBLE
-                    binding.layoutError.visibility = View.GONE
-                }
-            }
-        }
+    }
 
-        //set data when chapters load success
-        viewModel.chapters.observe(viewLifecycleOwner) { chapters ->
-            if (chapters != null) {
-                //adapter
-                binding.pager.adapter = ReadBookAdapter(
-                    chapters,
-                    {//on click
-                        if (viewModel.isShowSystemBar.value == true) {
-                            hideSystemUI()
-                            binding.toolbar.visibility = View.GONE
-                        } else {
-                            showSystemUI()
-                            binding.toolbar.visibility = View.VISIBLE
-                        }
-                        viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
-                    },
-                    { y -> //on scroll
-                        scrollY = y
-                        if (viewModel.isShowSystemBar.value == true) {
-                            hideSystemUI()
-                            binding.toolbar.visibility = View.GONE
-                            viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
-                        }
-                    },
-                    viewModel.savedStatus.value!!.page,
-                    viewModel.savedStatus.value!!.scrollY,
-                )
-                //recent page read
-                if (viewModel.savedStatus.value!!.page != 0) {
-                    binding.pager.setCurrentItem(
-                        viewModel.savedStatus.value!!.page,
-                        false
-                    )
+    private fun setData() {
+        //adapter
+        binding.pager.adapter = ReadBookAdapter(
+            viewModel.currentBook!!.listChapter,
+            {//on click
+                if (viewModel.isShowSystemBar.value == true) {
+                    hideSystemUI()
+                    binding.toolbar.visibility = View.GONE
+                } else {
+                    showSystemUI()
+                    binding.toolbar.visibility = View.VISIBLE
                 }
-                //flip book animation
-                val bookFlipPageTransformer = BookFlipPageTransformer2()
-                bookFlipPageTransformer.isEnableScale = true
-                bookFlipPageTransformer.scaleAmountPercent = 10f
-                binding.pager.setPageTransformer(bookFlipPageTransformer)
-            }
-        }
+                viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
+            },
+            { y -> //on scroll
+                viewModel.currentBookProcess!!.scrollY = y
+                if (viewModel.isShowSystemBar.value == true) {
+                    hideSystemUI()
+                    binding.toolbar.visibility = View.GONE
+                    viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
+                }
+            },
+            viewModel.currentBookProcess!!.page,
+            viewModel.currentBookProcess!!.scrollY,
+        )
+        //set recent page read
+        binding.pager.setCurrentItem(
+            viewModel.currentBookProcess!!.page,
+            false
+        )
+        //flip book animation
+        val bookFlipPageTransformer = BookFlipPageTransformer2()
+        bookFlipPageTransformer.isEnableScale = true
+        bookFlipPageTransformer.scaleAmountPercent = 10f
+        binding.pager.setPageTransformer(bookFlipPageTransformer)
 
         //page change -> change title toolbar
         binding.pager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    currentPage = position
+                    viewModel.currentBookProcess!!.page = position
                     binding.textCurrentChapter.text =
-                        "Chương ${currentPage + 1}/${viewModel.savedStatus.value!!.book.chapterNumber}"
+                        "Chương ${viewModel.currentBookProcess!!.page + 1}/${viewModel.currentBook!!.chapterNumber}"
                     super.onPageSelected(position)
                 }
             }
         )
 
-        binding.buttonReload.setOnClickListener {
-            viewModel.getAllChapters()
+        //toolbar
+        //pading top
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            binding.toolbar.setPadding(0, insets.top, 0, 0)
+            WindowInsetsCompat.CONSUMED
         }
 
-        setUpToolbar()
+        //toolbar title
+        binding.textCurrentChapter.text =
+            "Chương ${viewModel.currentBookProcess!!.page + 1}/${viewModel.currentBook!!.chapterNumber}"
+
+        binding.buttonBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onStop() {
-        SharedPrefUtils.saveString(
-            requireContext(),
-            "recent_book_source",
-            viewModel.savedStatus.value!!.book.publicSource
-        )
-        SharedPrefUtils.saveInt(
-            requireContext(),
-            "recent_book_y",
-            scrollY
-        )
-        SharedPrefUtils.saveInt(
-            requireContext(),
-            "recent_book_page",
-            currentPage
-        )
+        if (!(viewModel.currentBookProcess!!.page == 0 && viewModel.currentBookProcess!!.scrollY == 0)) {
+            viewModel.currentBookProcess!!.time = System.currentTimeMillis()
+            viewModel.saveReadBookProgress(requireContext())
+        }
         super.onStop()
     }
 
@@ -151,24 +121,6 @@ class ReadBookFragment : Fragment() {
         }
         super.onDestroy()
     }
-
-    private fun setUpToolbar() {
-        //pading top
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            binding.toolbar.setPadding(0, insets.top, 0, 0)
-            WindowInsetsCompat.CONSUMED
-        }
-
-        //data
-        binding.textCurrentChapter.text =
-            "Chương ${currentPage + 1}/${viewModel.savedStatus.value!!.book.chapterNumber}"
-
-        binding.buttonBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
-
 
     private fun hideSystemUI() {
         WindowInsetsControllerCompat(requireActivity().window, binding.root).let { controller ->

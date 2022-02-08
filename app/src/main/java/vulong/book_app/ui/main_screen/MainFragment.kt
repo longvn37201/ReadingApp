@@ -28,7 +28,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         if (!isSetupView) {
             isSetupView = true
             Helper.systemBarInset(binding!!.root)
@@ -43,8 +42,11 @@ class MainFragment : Fragment() {
                         R.id.bookshelf -> {
                             viewPager.setCurrentItem(0, false)
                         }
-                        R.id.setting -> {
+                        R.id.search -> {
                             viewPager.setCurrentItem(1, false)
+                        }
+                        R.id.setting -> {
+                            viewPager.setCurrentItem(2, false)
                         }
                     }
                 }

@@ -12,13 +12,13 @@ import java.io.InputStreamReader
 
 object Helper {
 
-    fun convertPublicSourceToImageUrl(
-        publicSource: String,
-    ) = "$BOOK_API_URL/public/$publicSource/anh.png"
+    fun convertidToImageUrl(
+        id: String,
+    ) = "$BOOK_API_URL/public/$id/anh.png"
 
-    fun convertPublicSourceToTextIntroUrl(
-        publicSource: String,
-    ) = "$BOOK_API_URL/public/$publicSource/gioi_thieu.txt"
+    fun convertidToTextIntroUrl(
+        id: String,
+    ) = "$BOOK_API_URL/public/$id/gioi_thieu.txt"
 
     fun handleCategoryTextInHomeScreen(
         listCategory: List<String>,

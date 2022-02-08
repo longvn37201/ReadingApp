@@ -9,9 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import vulong.book_app.databinding.FragmentBookDetailChapterBinding
+import vulong.book_app.model.local_db.ReadBookProgress
 import vulong.book_app.ui.book_detail_screen.BookDetailFragmentDirections
 import vulong.book_app.ui.book_detail_screen.BookDetailViewModel
-import vulong.book_app.util.model.SavedStatus
 
 class ChapterFragment : Fragment() {
 
@@ -29,11 +29,12 @@ class ChapterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.adapter = ChapterAdapter(viewModel.currentBook.value!!.chapterNumber) {
+        binding.recyclerView.adapter = ChapterAdapter(viewModel.currentBook!!.chapterNumber) {
             val action =
                 BookDetailFragmentDirections
                     .actionBookDetailFragmentToReadBookFragment(
-                        SavedStatus(viewModel.currentBook.value!!, it, 0)
+                        viewModel.currentBook!!,
+                        ReadBookProgress(viewModel.currentBook!!.id, it, 0)
                     )
             findNavController().navigate(action)
         }
