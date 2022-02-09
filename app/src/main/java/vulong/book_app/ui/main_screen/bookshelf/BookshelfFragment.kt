@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import vulong.book_app.databinding.FragmentMainBookshelfBinding
+import vulong.book_app.ui.main_screen.MainScreenViewModel
 import vulong.book_app.ui.main_screen.bookshelf.all_book_screen.AllBookFragment
 import vulong.book_app.ui.main_screen.bookshelf.read_recent_screen.RecentReadFragment
 
@@ -14,6 +16,8 @@ class BookshelfFragment : Fragment() {
 
 
     private var binding: FragmentMainBookshelfBinding? = null
+    val viewModel by activityViewModels<MainScreenViewModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +41,11 @@ class BookshelfFragment : Fragment() {
                 tab.text = "Đang Đọc"
             }
         }.attach()
+        viewModel.hasRecentBook.observe(viewLifecycleOwner) {
+            if (it) {
+                binding!!.pager.setCurrentItem(1, false)
+            }
+        }
     }
 
 }

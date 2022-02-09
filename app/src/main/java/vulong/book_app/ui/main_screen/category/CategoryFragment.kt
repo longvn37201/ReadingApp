@@ -1,7 +1,6 @@
-package vulong.book_app.ui.main_screen.search_book.category_screen
+package vulong.book_app.ui.main_screen.category
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,40 +10,44 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import vulong.book_app.R
-import vulong.book_app.databinding.FragmentMainBookshelfCategoryBinding
-import vulong.book_app.util.Constant.CATEGORY_FILE_NAME
+import vulong.book_app.databinding.FragmentMainCategoryBinding
+import vulong.book_app.ui.main_screen.MainFragmentDirections
+import vulong.book_app.util.Constant
 import vulong.book_app.util.Helper
-
 
 class CategoryFragment : Fragment() {
 
-
-    private lateinit var binding: FragmentMainBookshelfCategoryBinding
+    private var binding: FragmentMainCategoryBinding? = null
     private lateinit var listCategory: ArrayList<String>
+    private var isSetupView = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentMainBookshelfCategoryBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentMainCategoryBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         addCategoryFromAssets()
-
-
+        binding!!.layoutSearch.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToSearchBookFragment("")
+            findNavController().navigate(action)
+        }
     }
 
-    private val onCategoryClick: (String) -> Unit = {
-        Log.d("longvn", "$it is clicked")
+    private val onCategoryClick: (String) -> Unit = { category ->
+        val action = MainFragmentDirections.actionMainFragmentToSearchBookFragment(category.trim())
+        findNavController().navigate(action)
     }
 
     private fun addCategoryFromAssets() {
-        listCategory = Helper.readFile(CATEGORY_FILE_NAME, requireContext())
+        listCategory = Helper.readFile(Constant.CATEGORY_FILE_NAME, requireContext())
         listCategory.forEach { category ->
             TextView(context).apply {
                 text = category.trim()
@@ -65,7 +68,7 @@ class CategoryFragment : Fragment() {
                 params.setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels)
                 params.height = heightInPixels
                 layoutParams = params
-                binding.layoutCategory.addView(this)
+                binding!!.layoutCategory.addView(this)
                 (layoutParams as GridLayout.LayoutParams).columnSpec =
                     GridLayout.spec(GridLayout.UNDEFINED, 1f)
                 setOnClickListener {

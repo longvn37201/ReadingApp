@@ -3,15 +3,6 @@ package vulong.book_app.model.remote_api
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-//@Parcelize
-//data class Book(
-//    val id: String,
-//    val name: String,
-//    val author: String,
-//    val chapterNumber: Int,
-//    val category: ArrayList<String>,
-//) : Parcelable
-
 @Parcelize
 data class Book(
     var id: String,
@@ -21,6 +12,11 @@ data class Book(
     var imageUrl: String,
     var category: ArrayList<String>,
     var chapterNumber: Int,
+) : Parcelable
+
+@Parcelize
+data class Chapters(
+    var id: String,
     var listChapter: ArrayList<Chapter>,
 ) : Parcelable
 
@@ -29,3 +25,4 @@ data class Chapter(
     var name: String,
     var content: String,
 ) : Parcelable
+

@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_mainFragment_to_bookDetailFragment"
             app:destination="@id/bookDetailFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_searchBookFragment"
+            app:destination="@id/searchBookFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookDetailFragment"
@@ -47,5 +50,17 @@
         <argument
             android:name="currentBookProgress"
             app:argType="vulong.book_app.model.local_db.ReadBookProgress" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchBookFragment"
+        android:name="vulong.book_app.ui.search_screen.SearchBookFragment"
+        android:label="fragment_search_book"
+        tools:layout="@layout/fragment_search_book" >
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchBookFragment_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment" />
     </fragment>
 </navigation>

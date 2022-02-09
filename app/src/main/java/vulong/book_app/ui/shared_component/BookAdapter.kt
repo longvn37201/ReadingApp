@@ -1,4 +1,4 @@
-package vulong.book_app.ui.main_screen.bookshelf.all_book_screen
+package vulong.book_app.ui.shared_component
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

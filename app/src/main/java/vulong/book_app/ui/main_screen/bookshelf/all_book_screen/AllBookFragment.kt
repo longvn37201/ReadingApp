@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import vulong.book_app.databinding.FragmentMainBookshelfAllBookBinding
 import vulong.book_app.ui.main_screen.MainFragmentDirections
 import vulong.book_app.ui.main_screen.MainScreenViewModel
+import vulong.book_app.ui.shared_component.BookAdapter
 import vulong.book_app.util.model.State.*
 
 class AllBookFragment : Fragment() {
@@ -59,6 +60,7 @@ class AllBookFragment : Fragment() {
                     recyclerViewAllBook.adapter = adapter
                     recyclerViewAllBook.layoutManager =
                         LinearLayoutManager(requireContext())
+                    recyclerViewAllBook.setHasFixedSize(true)
                     recyclerViewAllBook.visibility = View.VISIBLE
                     layoutError.visibility = View.GONE
                     layoutLoadingShimmer.visibility = View.GONE

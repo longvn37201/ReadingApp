@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentMainBinding
 import vulong.book_app.util.Helper
@@ -13,6 +14,7 @@ class MainFragment : Fragment() {
 
 
     private var binding: FragmentMainBinding? = null
+    val viewModel by activityViewModels<MainScreenViewModel>()
     private var isSetupView = false
 
     override fun onCreateView(
@@ -30,8 +32,8 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (!isSetupView) {
             isSetupView = true
+            viewModel.checkContainRecentBook(requireContext())
             Helper.systemBarInset(binding!!.root)
-
             binding!!.apply {
                 viewPager.adapter = MainScreenAdapter(this@MainFragment)
                 viewPager.isUserInputEnabled = false

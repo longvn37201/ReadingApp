@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 import vulong.book_app.databinding.FragmentReadBookBinding
+import vulong.book_app.util.model.State
 
 
 class ReadBookFragment : Fragment() {
@@ -37,41 +38,69 @@ class ReadBookFragment : Fragment() {
 
         viewModel.currentBook = args.currentBook
         viewModel.currentBookProcess = args.currentBookProgress
-
+        viewModel.getAllChapter()
         setData()
 
     }
 
     private fun setData() {
-        //adapter
-        binding.pager.adapter = ReadBookAdapter(
-            viewModel.currentBook!!.listChapter,
-            {//on click
-                if (viewModel.isShowSystemBar.value == true) {
-                    hideSystemUI()
-                    binding.toolbar.visibility = View.GONE
-                } else {
-                    showSystemUI()
-                    binding.toolbar.visibility = View.VISIBLE
+        viewModel.chaptersOfBookLoadingState.observe(viewLifecycleOwner) {
+            binding.apply {
+                when (it) {
+                    is State.Loading -> {
+                        pager.visibility = View.GONE
+                        layoutError.visibility = View.GONE
+                        loadingProgressBar.visibility = View.VISIBLE
+                    }
+                    is State.Error -> {
+                        pager.visibility = View.GONE
+                        layoutError.visibility = View.VISIBLE
+                        loadingProgressBar.visibility = View.GONE
+                    }
+                    is State.Success -> {
+                        pager.visibility = View.VISIBLE
+                        layoutError.visibility = View.GONE
+                        loadingProgressBar.visibility = View.GONE
+                    }
                 }
-                viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
-            },
-            { y -> //on scroll
-                viewModel.currentBookProcess!!.scrollY = y
-                if (viewModel.isShowSystemBar.value == true) {
-                    hideSystemUI()
-                    binding.toolbar.visibility = View.GONE
-                    viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
-                }
-            },
-            viewModel.currentBookProcess!!.page,
-            viewModel.currentBookProcess!!.scrollY,
-        )
-        //set recent page read
-        binding.pager.setCurrentItem(
-            viewModel.currentBookProcess!!.page,
-            false
-        )
+            }
+        }
+        viewModel.chaptersOfBook.observe(viewLifecycleOwner) { chapters ->
+            if (chapters != null) {
+                //adapter
+                binding.pager.adapter = ReadBookAdapter(
+                    chapters.listChapter,
+                    {//on click
+                        if (viewModel.isShowSystemBar.value == true) {
+                            hideSystemUI()
+                            binding.toolbar.visibility = View.GONE
+                        } else {
+                            showSystemUI()
+                            binding.toolbar.visibility = View.VISIBLE
+                        }
+                        viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
+                    },
+                    { y -> //on scroll
+                        viewModel.currentBookProcess!!.scrollY = y
+                        if (viewModel.isShowSystemBar.value == true) {
+                            hideSystemUI()
+                            binding.toolbar.visibility = View.GONE
+                            viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
+                        }
+                    },
+                    viewModel.currentBookProcess!!.page,
+                    viewModel.currentBookProcess!!.scrollY,
+                )
+                //set recent page read
+                binding.pager.setCurrentItem(
+                    viewModel.currentBookProcess!!.page,
+                    false
+                )
+            } else {
+
+            }
+        }
+
         //flip book animation
         val bookFlipPageTransformer = BookFlipPageTransformer2()
         bookFlipPageTransformer.isEnableScale = true
@@ -89,6 +118,11 @@ class ReadBookFragment : Fragment() {
                 }
             }
         )
+
+        //button reload
+        binding.buttonReload.setOnClickListener {
+            viewModel.getAllChapter()
+        }
 
         //toolbar
         //pading top
@@ -108,10 +142,8 @@ class ReadBookFragment : Fragment() {
     }
 
     override fun onStop() {
-        if (!(viewModel.currentBookProcess!!.page == 0 && viewModel.currentBookProcess!!.scrollY == 0)) {
-            viewModel.currentBookProcess!!.time = System.currentTimeMillis()
-            viewModel.saveReadBookProgress(requireContext())
-        }
+        viewModel.currentBookProcess!!.time = System.currentTimeMillis()
+        viewModel.saveReadBookProgress(requireContext())
         super.onStop()
     }
 

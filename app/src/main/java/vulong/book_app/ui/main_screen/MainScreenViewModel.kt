@@ -21,6 +21,8 @@ class MainScreenViewModel() : ViewModel() {
         MutableLiveData(listOf())
     val allProgressState: MutableLiveData<State> = MutableLiveData(State.Loading)
 
+    val hasRecentBook: MutableLiveData<Boolean> = MutableLiveData(false)
+
     init {
         getAllBook()
     }
@@ -63,5 +65,17 @@ class MainScreenViewModel() : ViewModel() {
             }
         }
     }
+
+    fun checkContainRecentBook(context: Context) {
+        viewModelScope.launch {
+            val responseDb =
+                BookRecentDatabase.getInstance(context).bookRecentDAO()
+                    .getAllReadBookProgress()
+            if (!responseDb.isNullOrEmpty()) {
+                hasRecentBook.value = true
+            }
+        }
+    }
+
 
 }

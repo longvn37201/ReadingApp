@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
 
-        navGraph.startDestination =
-            if (showWelcomeScreen) R.id.welcomeFragment
-            else R.id.mainFragment
+        navGraph.startDestination = if (showWelcomeScreen) R.id.welcomeFragment
+        else R.id.mainFragment
+
         navController.graph = navGraph
     }
 
