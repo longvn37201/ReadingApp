@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentMainBinding
-import vulong.book_app.util.Helper
 
 class MainFragment : Fragment() {
 
@@ -33,7 +34,16 @@ class MainFragment : Fragment() {
         if (!isSetupView) {
             isSetupView = true
             viewModel.checkContainRecentBook(requireContext())
-            Helper.systemBarInset(binding!!.root)
+//            Helper.systemBarInset(binding!!.root)
+            ViewCompat.setOnApplyWindowInsetsListener(binding!!.root) { v, windowInsets ->
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                val mlp = v.layoutParams as ViewGroup.MarginLayoutParams
+                viewModel.insetTop = insets.top
+                viewModel.insetBottom = insets.bottom
+                mlp.bottomMargin = insets.bottom
+                v.layoutParams = mlp
+                WindowInsetsCompat.CONSUMED
+            }
             binding!!.apply {
                 viewPager.adapter = MainScreenAdapter(this@MainFragment)
                 viewPager.isUserInputEnabled = false

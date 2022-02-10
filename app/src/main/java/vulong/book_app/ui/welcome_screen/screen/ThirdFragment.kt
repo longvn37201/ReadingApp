@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -33,10 +34,11 @@ import vulong.book_app.util.SharedPrefUtils
 class ThirdFragment : Fragment() {
 
     private lateinit var binding: FragmentWelcomeThirdBinding
+    private val args: ThirdFragmentArgs by navArgs()
+
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
-
     private lateinit var databaseRef: DatabaseReference
 
     override fun onCreateView(
@@ -70,7 +72,6 @@ class ThirdFragment : Fragment() {
             if (currentUser == null)
                 signIn()
             else {
-                //todo remove toast
                 Toast.makeText(
                     context,
                     "Chào mừng: ${currentUser.displayName}",
@@ -170,16 +171,13 @@ class ThirdFragment : Fragment() {
     }
 
     private fun navigateToHome() {
-//        val editor: SharedPreferences.Editor =
-//            requireContext()
-//                .getSharedPreferences(Constant.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
-//                .edit()
-//        editor.putBoolean(Constant.SHOW_WELCOME_SCREEN, false)
-//        editor.apply()
-        SharedPrefUtils.saveBoolean(requireContext(), SHOW_WELCOME_SCREEN, false)
-        findNavController().navigate(R.id.action_welcomeFragment_to_mainFragment)
+        if (args.comeFromMain) {
+            findNavController().popBackStack()
+        } else {
+            SharedPrefUtils.saveBoolean(requireContext(), SHOW_WELCOME_SCREEN, false)
+            findNavController().navigate(R.id.action_welcomeFragment_to_mainFragment)
+        }
     }
 
 }
 
-//todo signOut Firebase.auth.signOut() in another fragment

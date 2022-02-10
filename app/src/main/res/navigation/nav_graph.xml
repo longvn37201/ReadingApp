@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_mainFragment_to_searchBookFragment"
             app:destination="@id/searchBookFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_thirdFragment"
+            app:destination="@id/thirdFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookDetailFragment"
@@ -62,5 +65,15 @@
         <action
             android:id="@+id/action_searchBookFragment_to_bookDetailFragment"
             app:destination="@id/bookDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/thirdFragment"
+        android:name="vulong.book_app.ui.welcome_screen.screen.ThirdFragment"
+        android:label="fragment_welcome_third"
+        tools:layout="@layout/fragment_welcome_third" >
+        <argument
+            android:name="comeFromMain"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

@@ -23,6 +23,9 @@ class MainScreenViewModel() : ViewModel() {
 
     val hasRecentBook: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    var insetTop = 0
+    var insetBottom = 0
+
     init {
         getAllBook()
     }

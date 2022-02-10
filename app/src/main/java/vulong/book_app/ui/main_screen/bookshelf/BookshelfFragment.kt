@@ -11,6 +11,7 @@ import vulong.book_app.databinding.FragmentMainBookshelfBinding
 import vulong.book_app.ui.main_screen.MainScreenViewModel
 import vulong.book_app.ui.main_screen.bookshelf.all_book_screen.AllBookFragment
 import vulong.book_app.ui.main_screen.bookshelf.read_recent_screen.RecentReadFragment
+import vulong.book_app.util.Helper.setMarginTop
 
 class BookshelfFragment : Fragment() {
 
@@ -46,6 +47,8 @@ class BookshelfFragment : Fragment() {
                 binding!!.pager.setCurrentItem(1, false)
             }
         }
+        //margin for top inset
+        binding!!.layoutTab.setMarginTop(viewModel.insetTop)
     }
 
 }

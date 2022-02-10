@@ -10,16 +10,21 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentMainCategoryBinding
 import vulong.book_app.ui.main_screen.MainFragmentDirections
+import vulong.book_app.ui.main_screen.MainScreenViewModel
 import vulong.book_app.util.Constant
 import vulong.book_app.util.Helper
+import vulong.book_app.util.Helper.setMarginTop
 
 class CategoryFragment : Fragment() {
 
     private var binding: FragmentMainCategoryBinding? = null
+    val viewModel by activityViewModels<MainScreenViewModel>()
+
     private lateinit var listCategory: ArrayList<String>
     private var isSetupView = false
 
@@ -39,6 +44,8 @@ class CategoryFragment : Fragment() {
             val action = MainFragmentDirections.actionMainFragmentToSearchBookFragment("")
             findNavController().navigate(action)
         }
+        //margin for top inset
+        binding!!.insetTop.setMarginTop(viewModel.insetTop)
     }
 
     private val onCategoryClick: (String) -> Unit = { category ->

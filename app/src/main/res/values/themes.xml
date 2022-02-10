@@ -58,13 +58,8 @@
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabTextAppearance">@style/MainTabTextStyle</item>
         <item name="tabSelectedTextColor">@color/main</item>
-<!--        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>-->
-<!--        <item name="tabBackground">@color/white</item>-->
     </style>
 
-<!--    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">-->
-<!--        <item name="textAllCaps">false</item>-->
-<!--    </style>-->
 
     <style name="MainTabTextStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
@@ -77,6 +72,11 @@
     <style name="CollapsingToolbarLayoutExpandedTextStyle" >
         <item name="android:textColor">@android:color/transparent</item>
         <item name="android:textSize">0sp</item>
+    </style>
+
+<!--    circle imageview-->
+    <style name="circle">
+        <item name="cornerSize">50%</item>
     </style>
 
 </resources>

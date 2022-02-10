@@ -18,7 +18,7 @@
         app:cnb_iconColor="@color/main" />
     <item
         android:id="@+id/setting"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/ic_person_bottom_nav"
         android:title="Cá nhân"
         app:cnb_iconColor="@color/main" />
 </menu>
