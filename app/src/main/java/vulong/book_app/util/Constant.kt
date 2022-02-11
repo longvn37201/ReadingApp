@@ -12,13 +12,13 @@ object Constant {
     const val SERVER_CLIENT_ID =
         "1058647916038-41ln1vrp3rjl0fdq6sclk7jgcbokq4dt.apps.googleusercontent.com"
 
-    //    const val BOOK_API_URL = "http://10.0.2.2:8080"
-    const val BOOK_API_URL = "https://vulong-bookserver.herokuapp.com"
+    const val BOOK_API_URL = "http://10.0.2.2:8080"
+//    const val BOOK_API_URL = "https://vulong-bookserver.herokuapp.com"
 
     val LIST_SETTING_ITEM by lazy {
         arrayOf(
             "Cài Đặt" to R.drawable.ic_setting,
-            "Trợ Giúp" to R.drawable.ic_question_mark,
+            "Chính Sách" to R.drawable.ic_question_mark,
             "Thông Tin Ứng Dụng" to R.drawable.ic_exclamation_mark,
             "Đăng Xuất" to R.drawable.ic_logout,
         )

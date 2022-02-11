@@ -73,13 +73,13 @@ class SettingFragment : Fragment() {
             constrainLayout.setOnClickListener {
                 when (index) {
                     0 -> {
-
+                        //todo setting
                     }
                     1 -> {
-
+                        //todo help center
                     }
                     2 -> {
-
+                        //todo app info
                     }
                     3 -> {
                         //login/logout
@@ -89,7 +89,8 @@ class SettingFragment : Fragment() {
                             setUpSettingItem()
                         } else {
                             val action = MainFragmentDirections.actionMainFragmentToThirdFragment()
-                            action.comeFromMain = true
+                            //1 for true
+                            action.isComeFromSetting = "1"
                             findNavController().navigate(action)
                         }
                     }

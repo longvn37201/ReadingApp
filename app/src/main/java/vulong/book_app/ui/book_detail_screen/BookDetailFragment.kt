@@ -15,6 +15,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import jp.wasabeef.glide.transformations.BlurTransformation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentBookDetailBinding
 import vulong.book_app.model.local_db.ReadBookProgress
@@ -84,21 +88,7 @@ class BookDetailFragment() : Fragment() {
                     }
                 }.attach()
 
-                //button read
-                binding!!.buttonRead.setOnClickListener {
-                    val action =
-                        BookDetailFragmentDirections
-                            .actionBookDetailFragmentToReadBookFragment(
-                                viewModel.currentBook!!,
-                                viewModel.readBookProcess ?: ReadBookProgress(
-                                    idBook = viewModel.currentBook!!.id,
-                                    page = 0,
-                                    scrollY = 0
-                                )
-                            )
-                    findNavController().navigate(action)
-                }
-
+                //observe get book progress from db
                 viewModel.readBookProcessState.observe(viewLifecycleOwner) {
                     if (it is State.Loading) {
                         binding!!.buttonRead.visibility = View.INVISIBLE
@@ -157,7 +147,33 @@ class BookDetailFragment() : Fragment() {
                         isShow = false
                     }
                 })
+                //button read
+                binding!!.buttonRead.setOnClickListener {
+                    val action =
+                        BookDetailFragmentDirections
+                            .actionBookDetailFragmentToReadBookFragment(
+                                viewModel.currentBook!!,
+                                viewModel.readBookProcess ?: ReadBookProgress(
+                                    idBook = viewModel.currentBook!!.id,
+                                    page = 0,
+                                    scrollY = 0
+                                )
+                            )
+                    findNavController().navigate(action)
+                }
+                //button download
+                binding!!.buttonDownload.setOnClickListener {
+                    CoroutineScope(Main).launch {
+                        binding!!.buttonDownload.visibility = View.INVISIBLE
+                        binding!!.buttonDownloadLoading.visibility = View.VISIBLE
+                        delay(3000)
+                        binding!!.buttonDownloadLoading.visibility = View.GONE
+                        binding!!.buttonDownload.visibility = View.VISIBLE
+                        binding!!.buttonDownload.setImageResource(R.drawable.ic_done)
+                    }
+                }
             } else {
+                //sẽ call lại 1 lần khi back lại màn hình bookdetail
                 viewModel.readBookProcessState.observe(viewLifecycleOwner) {
                     if (it is State.Loading) {
                         binding!!.buttonRead.visibility = View.INVISIBLE

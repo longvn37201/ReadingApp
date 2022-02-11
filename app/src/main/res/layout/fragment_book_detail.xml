@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".ui.book_detail_screen.BookDetailFragment">
 
@@ -147,16 +148,28 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/buttonFavorite"
+            android:id="@+id/buttonDownload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:background="?attr/selectableItemBackground"
-            android:src="@drawable/ic_heart_outline"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_download"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonRead"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/buttonDownloadLoading"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/main"
+            app:layout_constraintBottom_toBottomOf="@id/buttonDownload"
+            app:layout_constraintEnd_toEndOf="@id/buttonDownload"
+            app:layout_constraintStart_toStartOf="@id/buttonDownload"
+            app:layout_constraintTop_toTopOf="@id/buttonDownload" />
 
 
         <Button
@@ -168,7 +181,7 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/buttonFavorite"
+            app:layout_constraintStart_toEndOf="@+id/buttonDownload"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
@@ -176,8 +189,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:indeterminate="true"
-            android:padding="5dp"
             android:indeterminateTint="@color/main"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="@id/buttonRead"
             app:layout_constraintEnd_toEndOf="@id/buttonRead"
             app:layout_constraintStart_toStartOf="@id/buttonRead"

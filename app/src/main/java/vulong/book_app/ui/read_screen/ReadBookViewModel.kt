@@ -15,6 +15,8 @@ import vulong.book_app.util.model.State
 class ReadBookViewModel(
 ) : ViewModel() {
 
+    var isAuToScroll = false
+
     val isShowSystemBar = MutableLiveData<Boolean>(false)
     var currentBookProcess: ReadBookProgress? = null
     var currentBook: Book? = null

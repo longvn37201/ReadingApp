@@ -22,12 +22,24 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment" />
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@anim/from_right_to_0"
+            app:exitAnim="@anim/no_animation"
+            app:popEnterAnim="@anim/no_animation"
+            app:popExitAnim="@anim/from_0_to_right" />
         <action
+            app:enterAnim="@anim/from_right_to_0"
+            app:exitAnim="@anim/no_animation"
+            app:popEnterAnim="@anim/no_animation"
+            app:popExitAnim="@anim/from_0_to_right"
             android:id="@+id/action_mainFragment_to_searchBookFragment"
             app:destination="@id/searchBookFragment" />
         <action
             android:id="@+id/action_mainFragment_to_thirdFragment"
+            app:enterAnim="@anim/from_right_to_0"
+            app:exitAnim="@anim/no_animation"
+            app:popEnterAnim="@anim/no_animation"
+            app:popExitAnim="@anim/from_0_to_right"
             app:destination="@id/thirdFragment" />
     </fragment>
     <fragment
@@ -39,6 +51,10 @@
             android:name="currentBook"
             app:argType="vulong.book_app.model.remote_api.Book" />
         <action
+            app:enterAnim="@anim/no_animation"
+            app:exitAnim="@anim/from_0_to_top"
+            app:popEnterAnim="@anim/from_top_to_0"
+            app:popExitAnim="@anim/no_animation"
             android:id="@+id/action_bookDetailFragment_to_readBookFragment"
             app:destination="@id/readBookFragment" />
     </fragment>
@@ -72,8 +88,9 @@
         android:label="fragment_welcome_third"
         tools:layout="@layout/fragment_welcome_third" >
         <argument
-            android:name="comeFromMain"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:name="isComeFromSetting"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

@@ -28,7 +28,6 @@ class SearchBookFragment : Fragment() {
 
     private val args: SearchBookFragmentArgs by navArgs()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -113,11 +112,6 @@ class SearchBookFragment : Fragment() {
                 buttonClear.setOnClickListener {
                     textQuery.setText("")
                 }
-                //button back
-                buttonBack.setOnClickListener {
-                    findNavController().popBackStack()
-                }
-
                 //button reload
                 buttonReload.setOnClickListener {
                     if (viewModel.category != null) {
@@ -133,9 +127,24 @@ class SearchBookFragment : Fragment() {
                     v.layoutParams = mlp
                     WindowInsetsCompat.CONSUMED
                 }
+                //button back
+                buttonBack.setOnClickListener {
+                    findNavController().popBackStack()
+                    val currentFocusedView = requireActivity().currentFocus
+                    if (currentFocusedView != null) {
+                        val imm =
+                            requireActivity()
+                                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(
+                            currentFocusedView.windowToken,
+                            InputMethodManager.HIDE_NOT_ALWAYS
+                        )
+                    }
+                }
             }
         }
     }
+
 
     private val onBookClick: (Int) -> Unit = { index ->
         val action =

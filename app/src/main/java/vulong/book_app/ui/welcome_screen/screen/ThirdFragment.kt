@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -34,7 +33,6 @@ import vulong.book_app.util.SharedPrefUtils
 class ThirdFragment : Fragment() {
 
     private lateinit var binding: FragmentWelcomeThirdBinding
-    private val args: ThirdFragmentArgs by navArgs()
 
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -171,12 +169,20 @@ class ThirdFragment : Fragment() {
     }
 
     private fun navigateToHome() {
-        if (args.comeFromMain) {
-            findNavController().popBackStack()
-        } else {
+        //from welcome screen make args null
+        try {
+            val isComeFromMain = ThirdFragmentArgs.fromBundle(requireArguments()).isComeFromSetting
+            if (isComeFromMain == "1") {
+                findNavController().popBackStack()
+            } else {
+                SharedPrefUtils.saveBoolean(requireContext(), SHOW_WELCOME_SCREEN, false)
+                findNavController().navigate(R.id.action_welcomeFragment_to_mainFragment)
+            }
+        } catch (e: Exception) {
             SharedPrefUtils.saveBoolean(requireContext(), SHOW_WELCOME_SCREEN, false)
             findNavController().navigate(R.id.action_welcomeFragment_to_mainFragment)
         }
+
     }
 
 }

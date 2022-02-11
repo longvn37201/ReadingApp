@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         else R.id.mainFragment
 
         navController.graph = navGraph
+
     }
 
 

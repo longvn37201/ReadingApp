@@ -22,11 +22,6 @@ interface BookApi {
         @Query("category") category: String,
     ): Response<ArrayList<Book>>
 
-    @GET("/booksByCategory")
-    suspend fun getBook(
-        @Query("id") id: String,
-    ): Response<Book>
-
     @GET("/getAllChapter")
     suspend fun getAllChapter(
         @Query("id") id: String,
