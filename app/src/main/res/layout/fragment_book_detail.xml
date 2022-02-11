@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.book_detail_screen.BookDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -163,9 +163,9 @@
             android:id="@+id/buttonDownloadLoading"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:visibility="gone"
             android:indeterminate="true"
             android:indeterminateTint="@color/main"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/buttonDownload"
             app:layout_constraintEnd_toEndOf="@id/buttonDownload"
             app:layout_constraintStart_toStartOf="@id/buttonDownload"

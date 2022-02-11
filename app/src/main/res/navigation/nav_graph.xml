@@ -51,10 +51,6 @@
             android:name="currentBook"
             app:argType="vulong.book_app.model.remote_api.Book" />
         <action
-            app:enterAnim="@anim/no_animation"
-            app:exitAnim="@anim/from_0_to_top"
-            app:popEnterAnim="@anim/from_top_to_0"
-            app:popExitAnim="@anim/no_animation"
             android:id="@+id/action_bookDetailFragment_to_readBookFragment"
             app:destination="@id/readBookFragment" />
     </fragment>

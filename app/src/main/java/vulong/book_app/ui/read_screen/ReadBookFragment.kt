@@ -1,5 +1,6 @@
 package vulong.book_app.ui.read_screen
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,16 +61,23 @@ class ReadBookFragment : Fragment() {
                         pager.visibility = View.GONE
                         layoutError.visibility = View.GONE
                         loadingProgressBar.visibility = View.VISIBLE
+                        loadingProgressBar.setBackgroundResource(R.drawable.book_flip_animation)
+                        val frameAnimation = loadingProgressBar.background as AnimationDrawable
+                        frameAnimation.start()
                     }
                     is State.Error -> {
                         pager.visibility = View.GONE
                         layoutError.visibility = View.VISIBLE
                         loadingProgressBar.visibility = View.GONE
+                        val frameAnimation = loadingProgressBar.background as AnimationDrawable
+                        frameAnimation.stop()
                     }
                     is State.Success -> {
                         pager.visibility = View.VISIBLE
                         layoutError.visibility = View.GONE
                         loadingProgressBar.visibility = View.GONE
+                        val frameAnimation = loadingProgressBar.background as AnimationDrawable
+                        frameAnimation.stop()
                     }
                     else -> {}
                 }

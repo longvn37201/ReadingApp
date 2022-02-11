@@ -3,7 +3,7 @@
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F2DA"
+    android:background="@color/textReadBackground"
     android:scrollbars="vertical">
 
     <TextView
@@ -13,6 +13,6 @@
         android:clickable="true"
         android:fontFamily="@font/literata_light"
         android:padding="16dp"
-        android:textColor="#313131"
+        android:textColor="@color/textRead"
         android:textSize="@dimen/text20" />
 </androidx.core.widget.NestedScrollView>

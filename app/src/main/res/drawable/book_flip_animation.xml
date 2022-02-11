@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item
+        android:drawable="@drawable/ic_book1"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/ic_book2"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/ic_book3"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/ic_book4"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/ic_book5"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/ic_book6"
+        android:duration="100" />
+</animation-list>
