@@ -26,8 +26,8 @@ class ReadBookAdapter(
 
         fun setData(chapter: Chapter, position: Int) {
             binding.scrollView.fullScroll(ScrollView.FOCUS_UP);
-            binding.scrollView.tag = position
             binding.textContent.text = "${chapter.name}\n\n${chapter.content}"
+            binding.scrollView.tag = position
         }
 
         fun scrollToSavedY() {

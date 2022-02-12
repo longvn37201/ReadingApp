@@ -139,6 +139,13 @@ class ReadBookFragment : Fragment() {
                     binding.textCurrentChapter.text =
                         "Chương ${viewModel.currentBookProcess!!.page + 1}/${viewModel.currentBook!!.chapterNumber}"
                     super.onPageSelected(position)
+                    //fix chuyển trang xong out bị lưu tráng thái scroll của trang trước
+                    CoroutineScope(Main).launch {
+                        delay(200)
+                        val currentItemOfPager =
+                            binding.pager.findViewWithTag<NestedScrollView>(viewModel.currentBookProcess!!.page)
+                        viewModel.currentBookProcess!!.scrollY = currentItemOfPager.scrollY
+                    }
                 }
             }
         )
