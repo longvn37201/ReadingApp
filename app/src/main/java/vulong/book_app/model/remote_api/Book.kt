@@ -22,6 +22,7 @@ data class Chapters(
 
 @Parcelize
 data class Chapter(
+    var idChapter: String,
     var name: String,
     var content: String,
 ) : Parcelable

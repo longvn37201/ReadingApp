@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/textReadBackground"
     android:layout_height="match_parent"
+    android:background="@color/textReadBackground"
     tools:context=".ui.read_screen.ReadBookFragment">
 
 
@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="3dp"
-            android:text="Chương 100/300"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/buttonBack"
             app:layout_constraintTop_toTopOf="parent" />
@@ -57,52 +56,52 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layoutError"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:orientation="vertical"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <TextView
-            android:id="@+id/textError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Lỗi kết nối" />
+<!--        <TextView-->
+<!--            android:id="@+id/textError"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:text="Lỗi kết nối" />-->
 
-        <Button
-            android:id="@+id/buttonReload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thử lại"
-            android:textAllCaps="false" />
+<!--        <Button-->
+<!--            android:id="@+id/buttonReload"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Thử lại"-->
+<!--            android:textAllCaps="false" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
-    <!--    <ProgressBar-->
+    <!--    &lt;!&ndash;    <ProgressBar&ndash;&gt;-->
+    <!--    &lt;!&ndash;        android:id="@+id/loadingProgressBar"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        android:indeterminate="true"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        android:indeterminateTint="@color/main"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        android:visibility="gone"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+    <!--    &lt;!&ndash;        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
+
+    <!--    <ImageView-->
     <!--        android:id="@+id/loadingProgressBar"-->
     <!--        android:layout_width="wrap_content"-->
     <!--        android:layout_height="wrap_content"-->
-    <!--        android:indeterminate="true"-->
-    <!--        android:indeterminateTint="@color/main"-->
-    <!--        android:visibility="gone"-->
     <!--        app:layout_constraintBottom_toBottomOf="parent"-->
     <!--        app:layout_constraintEnd_toEndOf="parent"-->
     <!--        app:layout_constraintStart_toStartOf="parent"-->
     <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <ImageView
-        android:id="@+id/loadingProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

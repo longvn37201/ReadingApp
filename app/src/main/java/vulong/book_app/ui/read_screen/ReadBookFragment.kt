@@ -1,10 +1,10 @@
 package vulong.book_app.ui.read_screen
 
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -22,7 +22,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentReadBookBinding
-import vulong.book_app.util.model.State
+import vulong.book_app.model.local_db.ReadBookProgress
 
 
 class ReadBookFragment : Fragment() {
@@ -48,74 +48,38 @@ class ReadBookFragment : Fragment() {
 
         viewModel.currentBook = args.currentBook
         viewModel.currentBookProcess = args.currentBookProgress
-        viewModel.getAllChapter()
         setData()
 
     }
 
     private fun setData() {
-        viewModel.chaptersOfBookLoadingState.observe(viewLifecycleOwner) {
-            binding.apply {
-                when (it) {
-                    is State.Loading -> {
-                        pager.visibility = View.GONE
-                        layoutError.visibility = View.GONE
-                        loadingProgressBar.visibility = View.VISIBLE
-                        loadingProgressBar.setBackgroundResource(R.drawable.book_flip_animation)
-                        val frameAnimation = loadingProgressBar.background as AnimationDrawable
-                        frameAnimation.start()
-                    }
-                    is State.Error -> {
-                        pager.visibility = View.GONE
-                        layoutError.visibility = View.VISIBLE
-                        loadingProgressBar.visibility = View.GONE
-                        val frameAnimation = loadingProgressBar.background as AnimationDrawable
-                        frameAnimation.stop()
-                    }
-                    is State.Success -> {
-                        pager.visibility = View.VISIBLE
-                        layoutError.visibility = View.GONE
-                        loadingProgressBar.visibility = View.GONE
-                        val frameAnimation = loadingProgressBar.background as AnimationDrawable
-                        frameAnimation.stop()
-                    }
-                    else -> {}
+        //adapter
+        binding.pager.adapter = ChapterPagerAdapter(
+            this,
+            viewModel.currentBook!!.chapterNumber,
+            viewModel.currentBook!!.id
+        ) {
+            if (it == -1) {
+                if (viewModel.isShowSystemBar.value == true) {
+                    hideSystemUI()
+                    binding.toolbar.visibility = View.GONE
+                } else {
+                    showSystemUI()
+                    binding.toolbar.visibility = View.VISIBLE
                 }
-            }
-        }
-        viewModel.chaptersOfBook.observe(viewLifecycleOwner) { chapters ->
-            if (chapters != null) {
-                //adapter
-                binding.pager.adapter = ReadBookAdapter(
-                    chapters.listChapter,
-                    {//on click
-                        if (viewModel.isShowSystemBar.value == true) {
-                            hideSystemUI()
-                            binding.toolbar.visibility = View.GONE
-                        } else {
-                            showSystemUI()
-                            binding.toolbar.visibility = View.VISIBLE
-
-                        }
-                        viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
-                    },
-                    { y -> //on scroll
-                        viewModel.currentBookProcess!!.scrollY = y
-                        //fix auto scroll crash
-//                        if (viewModel.isShowSystemBar.value == true) {
-//                            hideSystemUI()
-//                            binding.toolbar.visibility = View.GONE
-//                            viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
-//                        }
-                    },
-                    viewModel.currentBookProcess!!.page,
-                    viewModel.currentBookProcess!!.scrollY,
-                )
-                //set recent page read
-                binding.pager.setCurrentItem(
-                    viewModel.currentBookProcess!!.page,
-                    false
-                )
+                viewModel.isShowSystemBar.value = !viewModel.isShowSystemBar.value!!
+                -1
+            } else {
+                if (viewModel.isFirstScrollToSaved) {
+                    if (it == viewModel.currentBookProcess!!.page) {
+                        viewModel.isFirstScrollToSaved = false
+                        viewModel.currentBookProcess!!.scrollY
+                    } else {
+                        -1
+                    }
+                } else {
+                    -1
+                }
             }
         }
 
@@ -137,23 +101,22 @@ class ReadBookFragment : Fragment() {
                     }
                     viewModel.currentBookProcess!!.page = position
                     binding.textCurrentChapter.text =
-                        "Chương ${viewModel.currentBookProcess!!.page + 1}/${viewModel.currentBook!!.chapterNumber}"
+                        "Chương ${position + 1}/${viewModel.currentBook!!.chapterNumber}"
+
                     super.onPageSelected(position)
-                    //fix chuyển trang xong out bị lưu tráng thái scroll của trang trước
-                    CoroutineScope(Main).launch {
-                        delay(200)
-                        val currentItemOfPager =
-                            binding.pager.findViewWithTag<NestedScrollView>(viewModel.currentBookProcess!!.page)
-                        viewModel.currentBookProcess!!.scrollY = currentItemOfPager.scrollY
-                    }
                 }
             }
         )
 
+        binding.pager.setCurrentItem(
+            viewModel.currentBookProcess!!.page,
+            false
+        )
+
         //button autoscroll
         binding.buttonAutoScroll.setOnClickListener {
-            val currentItemOfPager =
-                binding.pager.findViewWithTag<NestedScrollView>(binding.pager.currentItem)
+            val layoutContainer =
+                binding.pager.findViewWithTag<ConstraintLayout>(binding.pager.currentItem)
             if (viewModel.isAuToScroll) {
                 binding.buttonAutoScroll.setImageResource(R.drawable.ic_play)
                 job.cancel()
@@ -162,17 +125,13 @@ class ReadBookFragment : Fragment() {
                 job = CoroutineScope(Main).launch {
                     while (true) {
                         delay(50)
-                        currentItemOfPager.smoothScrollTo(0, currentItemOfPager.scrollY + 2)
+                        val nestScrollView = layoutContainer
+                            .findViewById<NestedScrollView>(R.id.scrollViewChapter)
+                        nestScrollView.smoothScrollTo(0, nestScrollView.scrollY + 3)
                     }
                 }
             }
             viewModel.isAuToScroll = !viewModel.isAuToScroll
-        }
-
-
-        //button reload
-        binding.buttonReload.setOnClickListener {
-            viewModel.getAllChapter()
         }
 
         //toolbar
@@ -183,18 +142,24 @@ class ReadBookFragment : Fragment() {
             WindowInsetsCompat.CONSUMED
         }
 
-        //toolbar title
-        binding.textCurrentChapter.text =
-            "Chương ${viewModel.currentBookProcess!!.page + 1}/${viewModel.currentBook!!.chapterNumber}"
-
         binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
     }
 
     override fun onStop() {
-        viewModel.currentBookProcess!!.time = System.currentTimeMillis()
-        viewModel.saveReadBookProgress(requireContext())
+        val nestScrollView =
+            binding.pager.findViewWithTag<ConstraintLayout>(binding.pager.currentItem)
+                .findViewById<NestedScrollView>(R.id.scrollViewChapter)
+        viewModel.saveReadBookProgress(
+            requireContext(),
+            ReadBookProgress(
+                viewModel.currentBook!!.id,
+                binding.pager.currentItem,
+                nestScrollView.scrollY,
+                System.currentTimeMillis()
+            )
+        )
         super.onStop()
     }
 

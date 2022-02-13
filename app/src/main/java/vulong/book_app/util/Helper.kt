@@ -104,4 +104,8 @@ object Helper {
     fun Context.dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
     }
+
+    fun toIdChapter(idBook: String, chapter: Int) = "${idBook}_chuong$chapter"
+
+
 }
