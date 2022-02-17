@@ -14,7 +14,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
-import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
@@ -23,6 +22,7 @@ import kotlinx.coroutines.launch
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentReadBookBinding
 import vulong.book_app.model.local_db.ReadBookProgress
+import vulong.book_app.util.ZoomOutPageTransformer
 
 
 class ReadBookFragment : Fragment() {
@@ -45,9 +45,9 @@ class ReadBookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.currentBook = args.currentBook
         viewModel.currentBookProcess = args.currentBookProgress
+        viewModel.getDownloadState(requireContext())
         setData()
 
     }
@@ -57,7 +57,8 @@ class ReadBookFragment : Fragment() {
         binding.pager.adapter = ChapterPagerAdapter(
             this,
             viewModel.currentBook!!.chapterNumber,
-            viewModel.currentBook!!.id
+            viewModel.currentBook!!.id,
+            viewModel.isDownload
         ) {
             if (it == -1) {
                 if (viewModel.isShowSystemBar.value == true) {
@@ -84,10 +85,7 @@ class ReadBookFragment : Fragment() {
         }
 
         //flip book animation
-        val bookFlipPageTransformer = BookFlipPageTransformer2()
-        bookFlipPageTransformer.isEnableScale = true
-        bookFlipPageTransformer.scaleAmountPercent = 10f
-        binding.pager.setPageTransformer(bookFlipPageTransformer)
+        binding.pager.setPageTransformer(ZoomOutPageTransformer())
 
         //page change -> change title toolbar
         binding.pager.registerOnPageChangeCallback(

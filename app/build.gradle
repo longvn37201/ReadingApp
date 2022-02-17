@@ -93,8 +93,5 @@ dependencies {
     //shimmer effect
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
-    //viewpager book flip animation
-    implementation 'com.wajahatkarim3.easyflipviewpager:easyflipviewpager:2.0.0'
-
 
 }

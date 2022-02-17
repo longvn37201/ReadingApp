@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import vulong.book_app.util.Constant.BOOK_API_URL
 
-class RetrofitInstance {
+class BookApiServiceInstance {
     companion object {
         private val retrofit: Retrofit by lazy {
             val logging = HttpLoggingInterceptor()

@@ -1,5 +1,6 @@
 package vulong.book_app.ui.book_detail_screen
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,16 +16,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import jp.wasabeef.glide.transformations.BlurTransformation
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import vulong.book_app.R
 import vulong.book_app.databinding.FragmentBookDetailBinding
 import vulong.book_app.model.local_db.ReadBookProgress
 import vulong.book_app.util.Helper
 import vulong.book_app.util.Helper.setMarginBottom
 import vulong.book_app.util.Helper.setMarginTop
+import vulong.book_app.util.model.DownloadState
 import vulong.book_app.util.model.State
 
 
@@ -50,6 +48,7 @@ class BookDetailFragment() : Fragment() {
         viewModel.currentBook = args.currentBook
         //get current book progress
         viewModel.getCurrentBookProgress(requireContext())
+        viewModel.getDownloadState(requireContext())
         setUpData()
     }
 
@@ -91,17 +90,17 @@ class BookDetailFragment() : Fragment() {
                 //observe get book progress from db
                 viewModel.readBookProcessState.observe(viewLifecycleOwner) {
                     if (it is State.Loading) {
-                        binding!!.buttonRead.visibility = View.INVISIBLE
-                        binding!!.loadingProgressBar.visibility = View.VISIBLE
+                        buttonRead.visibility = View.INVISIBLE
+                        loadingProgressBar.visibility = View.VISIBLE
                     }
                     if (it is State.Success) {
-                        binding!!.buttonRead.visibility = View.VISIBLE
-                        binding!!.loadingProgressBar.visibility = View.GONE
+                        buttonRead.visibility = View.VISIBLE
+                        loadingProgressBar.visibility = View.GONE
                         try {
-                            binding!!.buttonRead.text =
+                            buttonRead.text =
                                 "Đọc tiếp chương ${viewModel.readBookProcess!!.page + 1}"
                         } catch (e: Exception) {
-                            binding!!.buttonRead.text =
+                            buttonRead.text =
                                 "Bắt đầu đọc"
                         }
                     }
@@ -112,7 +111,6 @@ class BookDetailFragment() : Fragment() {
                 toolbar.setNavigationOnClickListener {
                     findNavController().popBackStack()
                 }
-
                 //insets toolbar
                 ViewCompat.setOnApplyWindowInsetsListener(root) { _, windowInsets ->
                     val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -148,7 +146,7 @@ class BookDetailFragment() : Fragment() {
                     }
                 })
                 //button read
-                binding!!.buttonRead.setOnClickListener {
+                buttonRead.setOnClickListener {
                     val action =
                         BookDetailFragmentDirections
                             .actionBookDetailFragmentToReadBookFragment(
@@ -162,36 +160,98 @@ class BookDetailFragment() : Fragment() {
                     findNavController().navigate(action)
                 }
                 //button download
-                binding!!.buttonDownload.setOnClickListener {
-                    CoroutineScope(Main).launch {
-                        binding!!.buttonDownload.visibility = View.INVISIBLE
-                        binding!!.buttonDownloadLoading.visibility = View.VISIBLE
-                        delay(3000)
-                        binding!!.buttonDownloadLoading.visibility = View.GONE
-                        binding!!.buttonDownload.visibility = View.VISIBLE
-                        binding!!.buttonDownload.setImageResource(R.drawable.ic_done)
+                viewModel.downloadState.observe(viewLifecycleOwner) {
+                    when (it) {
+                        is DownloadState.Loading -> {
+                            toolbar.setNavigationOnClickListener(null)
+                            downloadProgressBar.visibility = View.VISIBLE
+                            buttonDownload.visibility = View.INVISIBLE //invisible
+                            buttonRead.isEnabled = false
+                        }
+                        is DownloadState.Downloaded -> {
+                            toolbar.setNavigationOnClickListener {
+                                findNavController().popBackStack()
+                            }
+                            buttonDownload.visibility = View.VISIBLE
+                            buttonRead.isEnabled = true
+                            buttonDownload.setImageResource(R.drawable.ic_done)
+                            downloadProgressBar.visibility = View.GONE
+                        }
+                        is DownloadState.None -> {
+                            toolbar.setNavigationOnClickListener {
+                                findNavController().popBackStack()
+                            }
+                            buttonDownload.visibility = View.VISIBLE
+                            buttonDownload.setImageResource(R.drawable.ic_download)
+                            buttonRead.isEnabled = true
+                            downloadProgressBar.visibility = View.GONE
+                        }
                     }
+                }
+                buttonDownload.setOnClickListener {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder
+                        .setMessage(
+                            if (viewModel.downloadState.value is DownloadState.None)
+                                "Tải truyện về máy?"
+                            else "Xóa truyện đã tải?"
+                        )
+                        .setCancelable(true)
+                        .setPositiveButton("Xác nhận") { _, _ ->
+                            if (viewModel.downloadState.value is DownloadState.None) {
+                                viewModel.downloadBook(requireContext())
+                            } else {
+                                viewModel.deleteDownloadBook(requireContext())
+                            }
+                        }
+                        .setNegativeButton("Hủy") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                    val alert = builder.create()
+                    alert.show()
                 }
             } else {
                 //sẽ call lại 1 lần khi back lại màn hình bookdetail
                 viewModel.readBookProcessState.observe(viewLifecycleOwner) {
                     if (it is State.Loading) {
-                        binding!!.buttonRead.visibility = View.INVISIBLE
-                        binding!!.loadingProgressBar.visibility = View.VISIBLE
+                        buttonRead.visibility = View.INVISIBLE
+                        loadingProgressBar.visibility = View.VISIBLE
                     }
                     if (it is State.Success) {
-                        binding!!.buttonRead.visibility = View.VISIBLE
-                        binding!!.loadingProgressBar.visibility = View.GONE
+                        buttonRead.visibility = View.VISIBLE
+                        loadingProgressBar.visibility = View.GONE
                         try {
-                            binding!!.buttonRead.text =
+                            buttonRead.text =
                                 "Đọc tiếp chương ${viewModel.readBookProcess!!.page + 1}"
                         } catch (e: Exception) {
-                            binding!!.buttonRead.text =
+                            buttonRead.text =
                                 "Bắt đầu đọc"
+                        }
+                    }
+                }
+                viewModel.downloadState.observe(viewLifecycleOwner) {
+                    when (it) {
+                        is DownloadState.Loading -> {
+                            downloadProgressBar.visibility = View.VISIBLE
+                            buttonDownload.visibility = View.INVISIBLE //invisible
+                            buttonRead.isEnabled = false
+                        }
+                        is DownloadState.Downloaded -> {
+                            buttonDownload.visibility = View.VISIBLE
+                            buttonRead.isEnabled = true
+                            buttonDownload.setImageResource(R.drawable.ic_done)
+                            downloadProgressBar.visibility = View.GONE
+                        }
+                        is DownloadState.None -> {
+                            buttonDownload.visibility = View.VISIBLE
+                            buttonDownload.setImageResource(R.drawable.ic_download)
+                            buttonRead.isEnabled = true
+                            downloadProgressBar.visibility = View.GONE
                         }
                     }
                 }
             }
         }
     }
+
 }

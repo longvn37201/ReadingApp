@@ -57,8 +57,11 @@ class MainFragment : Fragment() {
                         R.id.search -> {
                             viewPager.setCurrentItem(1, false)
                         }
-                        R.id.setting -> {
+                        R.id.download -> {
                             viewPager.setCurrentItem(2, false)
+                        }
+                        R.id.setting -> {
+                            viewPager.setCurrentItem(3, false)
                         }
                     }
                 }

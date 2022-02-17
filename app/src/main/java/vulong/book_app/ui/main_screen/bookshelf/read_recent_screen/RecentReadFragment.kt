@@ -35,7 +35,18 @@ class RecentReadFragment : Fragment() {
 
         viewModel.allBookState.observe(viewLifecycleOwner) {
             when (it) {
-                is State.Success -> viewModel.getAllReadBookProgress(requireContext())
+                is State.Success -> {
+                    viewModel.getAllReadBookProgress(requireContext())
+                    binding!!.layoutError.visibility = View.GONE
+                }
+                is State.Loading -> {
+                    binding!!.layoutError.visibility = View.GONE
+                    binding!!.loadingProgressBar.visibility = View.VISIBLE
+                }
+                is State.Error -> {
+                    binding!!.layoutError.visibility = View.VISIBLE
+                    binding!!.loadingProgressBar.visibility = View.GONE
+                }
             }
         }
 
@@ -53,7 +64,6 @@ class RecentReadFragment : Fragment() {
             viewModel.allProgressState.observe(viewLifecycleOwner) {
                 when (it) {
                     is State.Loading -> {
-                        loadingProgressBar.visibility = View.VISIBLE
                         textNoBookRecent.visibility = View.GONE
                         recyclerView.visibility = View.GONE
                     }
@@ -77,6 +87,10 @@ class RecentReadFragment : Fragment() {
                     }
                 }
 
+            }
+
+            buttonReload.setOnClickListener {
+                viewModel.getAllBook()
             }
 
         }

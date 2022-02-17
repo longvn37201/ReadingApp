@@ -8,11 +8,12 @@ class ChapterPagerAdapter(
     f: Fragment,
     private val count: Int,
     private val idBook: String,
+    private val isDownload: Boolean = false,
     private val callBack: (Int) -> Int,
 ) : FragmentStateAdapter(f) {
     override fun getItemCount(): Int = count
     override fun createFragment(position: Int): Fragment {
-        val fragment = ReadBookChapterFragment {
+        val fragment = ReadBookChapterFragment(isDownload) {
             callBack(it)
         }
         fragment.arguments = Bundle().apply {

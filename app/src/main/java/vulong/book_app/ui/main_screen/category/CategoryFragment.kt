@@ -54,7 +54,7 @@ class CategoryFragment : Fragment() {
     }
 
     private fun addCategoryFromAssets() {
-        listCategory = Helper.readFile(Constant.CATEGORY_FILE_NAME, requireContext())
+        listCategory = Helper.readAssets(Constant.CATEGORY_FILE_NAME, requireContext())
         listCategory.forEach { category ->
             TextView(context).apply {
                 text = category.trim()

@@ -6,3 +6,9 @@ sealed class State {
     object Success : State()
     class Error(val errorMessage: String) : State()
 }
+
+sealed class DownloadState {
+    object Downloaded : DownloadState()
+    object Loading : DownloadState()
+    object None : DownloadState()
+}

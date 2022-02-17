@@ -66,8 +66,6 @@ class AllBookFragment : Fragment() {
                     layoutLoadingShimmer.visibility = View.GONE
                 }
                 is Error -> {
-                    val state = viewModel.allBookState.value as Error
-                    textError.text = state.errorMessage
                     layoutError.visibility = View.VISIBLE
                     recyclerViewAllBook.visibility = View.GONE
                     layoutLoadingShimmer.visibility = View.GONE

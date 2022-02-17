@@ -23,7 +23,6 @@ interface BookApi {
         @Query("take") take: String,
     ): Response<ArrayList<Book>>
 
-
     @GET("/getBooksByCategory")
     suspend fun getBooksByCategory(
         @Query("category") category: String,
@@ -33,7 +32,6 @@ interface BookApi {
     suspend fun getAllChapter(
         @Query("id") id: String,
     ): Response<Chapters>
-
 
     @GET("/getChapter")
     suspend fun getChapter(

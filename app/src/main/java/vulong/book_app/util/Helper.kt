@@ -1,24 +1,130 @@
 package vulong.book_app.util
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import vulong.book_app.util.Constant.BOOK_API_URL
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import vulong.book_app.model.remote_api.Book
+import vulong.book_app.model.remote_api.Chapter
+import vulong.book_app.model.remote_api.Chapters
+import java.io.*
 
 object Helper {
 
-    fun convertidToImageUrl(
-        id: String,
-    ) = "$BOOK_API_URL/public/$id/anh.png"
+    fun readListBookInternal(context: Context): ArrayList<Book> {
+        val file = File(context.filesDir, "listBook.json")
+        return if (file.exists()) {
+            val bufferedReader: BufferedReader =
+                file.bufferedReader()
+            //file json String
+            val jsonString = bufferedReader.use { it.readText() }
+            Gson().fromJson(jsonString, object : TypeToken<ArrayList<Book>>() {}.type)
+        } else {
+            ArrayList()
+        }
+    }
 
-    fun convertidToTextIntroUrl(
-        id: String,
-    ) = "$BOOK_API_URL/public/$id/gioi_thieu.txt"
+    fun writeBookToInternal(context: Context, book: Book) {
+        val listBook = readListBookInternal(context)
+        listBook.add(book)
+        val jsonString = Gson().toJson(listBook)
+        val file = File(context.filesDir, "listBook.json")
+        file.printWriter().use { out ->
+            out.println(jsonString)
+        }
+    }
+
+    fun deleteBookFromInternal(context: Context, id: String) {
+        val listBook = readListBookInternal(context)
+        //fix ConcurrentModificationException khi xoas phan tu bang forEach
+        var pos = -1;
+        listBook.forEachIndexed { index, item ->
+            if (item.id == id) {
+                pos = index
+                return@forEachIndexed
+            }
+        }
+        if (pos != -1) {
+            listBook.removeAt(pos)
+            val jsonString = Gson().toJson(listBook)
+            val file = File(context.filesDir, "listBook.json")
+            file.printWriter().use { out ->
+                out.println(jsonString)
+            }
+        }
+    }
+
+    fun writeChaptersOfBookToInternal(context: Context, chapters: Chapters) {
+        chapters.listChapter.forEach {
+            val jsonString = Gson().toJson(it)
+            val file = File(context.filesDir, "${it.idChapter}.json")
+            file.printWriter().use { out ->
+                out.println(jsonString)
+            }
+        }
+    }
+
+    fun readChapterOfBookFromInternal(context: Context, idChapter: String): Chapter? {
+        val file = File(context.filesDir, "$idChapter.json")
+        return if (file.exists()) {
+            val bufferedReader: BufferedReader =
+                file.bufferedReader()
+            //file json String
+            val jsonString = bufferedReader.use { it.readText() }
+
+            //jsonString to object (or List)
+            val typeToken = object : TypeToken<Chapter>() {}.type
+            Gson().fromJson(jsonString, typeToken)
+
+        } else {
+            null
+        }
+    }
+
+    fun deleteChaptersOfBookFromInternal(context: Context, id: String, chapterNumber: Int) {
+        for (i in 1..chapterNumber) {
+            try {
+                val file = File(context.filesDir, "${id}_chuong$i.json")
+                file.delete()
+            } catch (e: Exception) {
+
+            }
+        }
+
+    }
+
+    fun saveBitmapToInternal(context: Context, bitmap: Bitmap, id: String): String {
+        // path to /data/data/yourapp/files/img.jpg
+        val myPath = File(context.filesDir, "$id.jpg")
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(myPath)
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fos)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                fos?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+        return myPath.toString()
+    }
+
+    fun deleteBitmapFromInternal(context: Context, id: String) {
+        try {
+            val file = File(context.filesDir, "$id.jpg")
+            file.delete()
+        } catch (e: Exception) {
+
+        }
+    }
 
     fun handleCategoryTextInHomeScreen(
         listCategory: List<String>,
@@ -35,7 +141,7 @@ object Helper {
     }
 
 
-    fun readFile(
+    fun readAssets(
         fileName: String,
         context: Context,
     ): ArrayList<String> {

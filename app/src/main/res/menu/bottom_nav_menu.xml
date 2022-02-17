@@ -17,6 +17,11 @@
         android:title="Tìm Truyện"
         app:cnb_iconColor="@color/main" />
     <item
+        android:id="@+id/download"
+        android:icon="@drawable/ic_download_tab"
+        android:title="Tải Xuống"
+        app:cnb_iconColor="@color/main" />
+    <item
         android:id="@+id/setting"
         android:icon="@drawable/ic_person_bottom_nav"
         android:title="Cá nhân"

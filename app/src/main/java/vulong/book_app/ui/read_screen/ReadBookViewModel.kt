@@ -8,12 +8,14 @@ import kotlinx.coroutines.launch
 import vulong.book_app.local_db.BookRecentDatabase
 import vulong.book_app.model.local_db.ReadBookProgress
 import vulong.book_app.model.remote_api.Book
+import vulong.book_app.util.SharedPrefUtils
 import vulong.book_app.util.model.State
 
-class ReadBookViewModel(
-) : ViewModel() {
+class ReadBookViewModel : ViewModel() {
 
     var isAuToScroll = false
+
+    var isDownload = false
 
     val isShowSystemBar = MutableLiveData<Boolean>(false)
     var currentBookProcess: ReadBookProgress? = null
@@ -22,6 +24,10 @@ class ReadBookViewModel(
     var isFirstScrollToSaved = true
 
     val loadingChapterState = MutableLiveData<State>(State.None)
+
+    fun getDownloadState(context: Context) {
+        isDownload = SharedPrefUtils.getBooleanData(context, currentBook!!.id, false)
+    }
 
     fun saveReadBookProgress(context: Context) {
         viewModelScope.launch {

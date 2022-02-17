@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import vulong.book_app.model.remote_api.Book
-import vulong.book_app.retrofit.RetrofitInstance
+import vulong.book_app.retrofit.BookApiServiceInstance
 import vulong.book_app.util.model.State
 
 class SearchBookViewModel : ViewModel() {
@@ -18,7 +18,7 @@ class SearchBookViewModel : ViewModel() {
         viewModelScope.launch {
             loadingState.value = State.Loading
             try {
-                val response = RetrofitInstance.api.getBooksByCategory(category!!)
+                val response = BookApiServiceInstance.api.getBooksByCategory(category!!)
                 if (response.isSuccessful) {
                     listBook.value = response.body()
                     loadingState.value = State.Success
@@ -35,7 +35,7 @@ class SearchBookViewModel : ViewModel() {
         viewModelScope.launch {
             loadingState.value = State.Loading
             try {
-                val response = RetrofitInstance.api.searchBooks(query)
+                val response = BookApiServiceInstance.api.searchBooks(query)
                 if (response.isSuccessful) {
                     listBook.value = response.body()
                     loadingState.value = State.Success
