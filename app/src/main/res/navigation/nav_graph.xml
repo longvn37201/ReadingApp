@@ -41,6 +41,13 @@
             app:popEnterAnim="@anim/no_animation"
             app:popExitAnim="@anim/from_0_to_right"
             app:destination="@id/thirdFragment" />
+        <action
+            app:enterAnim="@anim/from_right_to_0"
+            app:exitAnim="@anim/no_animation"
+            app:popEnterAnim="@anim/no_animation"
+            app:popExitAnim="@anim/from_0_to_right"
+            android:id="@+id/action_mainFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookDetailFragment"
@@ -89,4 +96,9 @@
             app:nullable="true"
             android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="vulong.book_app.ui.about_screen.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

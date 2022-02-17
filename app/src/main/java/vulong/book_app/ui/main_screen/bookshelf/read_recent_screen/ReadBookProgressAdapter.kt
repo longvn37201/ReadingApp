@@ -1,6 +1,7 @@
 package vulong.book_app.ui.main_screen.bookshelf.read_recent_screen
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,9 +11,11 @@ import vulong.book_app.model.local_db.ReadBookProgress
 import vulong.book_app.model.remote_api.Book
 
 class ReadBookProgressAdapter(
-    private val listItems: ArrayList<Book>,
+    val listItems: ArrayList<Book>,
     private val listReadBookProgress: List<ReadBookProgress>,
+    var isEdit: Boolean = false,
     val clickListener: (Int) -> Unit,
+    val deleteItemListener: (Int) -> Unit,
 ) : RecyclerView.Adapter<ReadBookProgressAdapter.ViewHolder>() {
 
     inner class ViewHolder(
@@ -28,6 +31,16 @@ class ReadBookProgressAdapter(
             binding.textBookName.text = book.name
             binding.textChapter.text =
                 "Đang đọc chương ${listReadBookProgress[position].page + 1}/${book.chapterNumber}"
+            if (isEdit) {
+                binding.buttonDelete.visibility = View.VISIBLE
+            } else {
+                binding.buttonDelete.visibility = View.GONE
+            }
+            binding.buttonDelete.tag = "recent_item_delete_$position"
+            binding.buttonDelete.setOnClickListener {
+                deleteItemListener(position)
+            }
+
         }
     }
 

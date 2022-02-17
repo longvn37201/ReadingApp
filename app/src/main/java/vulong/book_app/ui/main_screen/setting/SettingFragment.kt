@@ -1,5 +1,7 @@
 package vulong.book_app.ui.main_screen.setting
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -73,13 +75,18 @@ class SettingFragment : Fragment() {
             constrainLayout.setOnClickListener {
                 when (index) {
                     0 -> {
-                        //todo setting
+
                     }
                     1 -> {
-                        //todo help center
+                        val url = "https://facebook.com"
+                        val uri = Uri.parse(url)
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                            startActivity(intent)
+                        }
                     }
                     2 -> {
-                        //todo app info
+                        findNavController().navigate(R.id.action_mainFragment_to_aboutFragment)
                     }
                     3 -> {
                         //login/logout

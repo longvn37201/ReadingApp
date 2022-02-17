@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "vulong.book_app"
-        minSdk 26
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -63,7 +63,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'

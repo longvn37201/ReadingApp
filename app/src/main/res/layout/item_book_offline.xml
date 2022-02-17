@@ -30,14 +30,14 @@
         android:maxLines="2"
         android:text="Loremas đjsadka hkahd kjsa hdkaj dha"
         android:textSize="@dimen/text16"
-        app:layout_constraintBottom_toTopOf="@id/textChapter"
+        app:layout_constraintBottom_toTopOf="@id/textAuthor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageBook"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textChapter"
+        android:id="@+id/textAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="45dp"
@@ -54,8 +54,8 @@
         android:id="@+id/buttonDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
         android:visibility="gone"
+        android:layout_marginEnd="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_remove"
         app:layout_constraintBottom_toBottomOf="parent"
