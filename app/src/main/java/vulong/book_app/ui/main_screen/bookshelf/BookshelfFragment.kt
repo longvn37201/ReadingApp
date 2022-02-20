@@ -13,7 +13,9 @@ import vulong.book_app.ui.main_screen.bookshelf.all_book_screen.AllBookFragment
 import vulong.book_app.ui.main_screen.bookshelf.read_recent_screen.RecentReadFragment
 import vulong.book_app.util.Helper.setMarginTop
 
-class BookshelfFragment : Fragment() {
+class BookshelfFragment(
+    private val navigateToOfflineCallBack: () -> Unit,
+) : Fragment() {
 
 
     private var binding: FragmentMainBookshelfBinding? = null
@@ -31,7 +33,10 @@ class BookshelfFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = BookShelfAdapter(
-            arrayListOf(AllBookFragment(), RecentReadFragment()),
+            arrayListOf(
+                AllBookFragment(navigateToOfflineCallBack),
+                RecentReadFragment(navigateToOfflineCallBack)
+            ),
             this
         )
         binding!!.pager.adapter = adapter

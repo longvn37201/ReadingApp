@@ -45,7 +45,11 @@ class MainFragment : Fragment() {
                 WindowInsetsCompat.CONSUMED
             }
             binding!!.apply {
-                viewPager.adapter = MainScreenAdapter(this@MainFragment)
+                viewPager.adapter =
+                    MainScreenAdapter(this@MainFragment, navigateToOfflineCallBack = {
+                        viewPager.setCurrentItem(2, false)
+                        bottomNavigationView.setItemSelected(R.id.download)
+                    })
                 viewPager.isUserInputEnabled = false
                 viewPager.isSaveEnabled = false
                 bottomNavigationView.setItemSelected(R.id.bookshelf)

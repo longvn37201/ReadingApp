@@ -73,6 +73,12 @@
             android:layout_height="wrap_content"
             android:text="Thử lại"
             android:textAllCaps="false" />
+        <Button
+            android:id="@+id/buttonReadOffline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đọc truyện đã tải"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 

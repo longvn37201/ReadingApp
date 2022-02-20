@@ -16,7 +16,9 @@ import vulong.book_app.ui.main_screen.MainFragmentDirections
 import vulong.book_app.ui.main_screen.MainScreenViewModel
 import vulong.book_app.util.model.State
 
-class RecentReadFragment : Fragment() {
+class RecentReadFragment(
+    private val navigateToOfflineCallBack: () -> Unit,
+) : Fragment() {
 
     private var binding: FragmentMainBookshelfRecentReadBinding? = null
     private val viewModel: MainScreenViewModel by activityViewModels()
@@ -50,6 +52,9 @@ class RecentReadFragment : Fragment() {
                 is State.Error -> {
                     binding!!.layoutError.visibility = View.VISIBLE
                     binding!!.loadingProgressBar.visibility = View.GONE
+                    binding!!.buttonReadOffline.setOnClickListener {
+                        navigateToOfflineCallBack()
+                    }
                 }
             }
         }

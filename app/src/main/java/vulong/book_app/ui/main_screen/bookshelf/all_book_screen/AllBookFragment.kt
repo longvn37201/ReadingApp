@@ -14,7 +14,9 @@ import vulong.book_app.ui.main_screen.MainScreenViewModel
 import vulong.book_app.ui.shared_component.BookAdapter
 import vulong.book_app.util.model.State.*
 
-class AllBookFragment : Fragment() {
+class AllBookFragment(
+    private val navigateToOfflineCallBack: () -> Unit,
+) : Fragment() {
 
 
     private val viewModel: MainScreenViewModel by activityViewModels()
@@ -69,6 +71,9 @@ class AllBookFragment : Fragment() {
                     layoutError.visibility = View.VISIBLE
                     recyclerViewAllBook.visibility = View.GONE
                     layoutLoadingShimmer.visibility = View.GONE
+                    buttonReadOffline.setOnClickListener {
+                        navigateToOfflineCallBack()
+                    }
                 }
                 else -> {}
             }
