@@ -122,10 +122,10 @@ class ReadBookFragment : Fragment() {
                 binding.buttonAutoScroll.setImageResource(R.drawable.ic_stop)
                 job = CoroutineScope(Main).launch {
                     while (true) {
-                        delay(50)
+                        delay(15)
                         val nestScrollView = layoutContainer
                             .findViewById<NestedScrollView>(R.id.scrollViewChapter)
-                        nestScrollView.smoothScrollTo(0, nestScrollView.scrollY + 3)
+                        nestScrollView.smoothScrollTo(0, nestScrollView.scrollY + 1)
                     }
                 }
             }
