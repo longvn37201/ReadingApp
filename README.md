@@ -9,6 +9,10 @@ Novel reading app on Android
   - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - notify domain layer data to views.
   - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - UI related data holder, lifecycle aware.
   - [Room](https://developer.android.com/training/data-storage/room) - constructing database.
+  - [Kotlin ktx](https://developer.android.com/kotlin/ktx)
+- Firebase
+  - Authentication
+  - Realtime database
 - [Navigation](https://developer.android.com/guide/navigation)
 - [Retrofit](https://github.com/square/retrofit)
 - [Glide](https://github.com/bumptech/glide)
