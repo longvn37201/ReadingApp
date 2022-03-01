@@ -15,8 +15,8 @@ Novel reading app on Android
 - [Facebook Shimmer](https://github.com/facebook/shimmer-android)
 
 ### Screenshots
-<img src="https://i.imgur.com/nFQVmNM.jpg" width=300/><img src="https://i.imgur.com/vUTRBHI.jpg" width=300/>
-<img src="https://i.imgur.com/yTz87IT.jpg" width=300/><img src="https://i.imgur.com/gk5HG8G.jpg" width=300/>
-<img src="https://i.imgur.com/5yFRqjD.jpg" width=300/><img src="https://i.imgur.com/CU1KI7o.jpg" width=300/>   
-<img src="https://i.imgur.com/oc40KQr.jpg" width=300/><img src="https://i.imgur.com/OIbaE4R.jpg" width=300/>
-<img src="https://i.imgur.com/raLvdOu.jpg" width=300/>
+<img src="https://i.imgur.com/nFQVmNM.jpg" width=300/> <img src="https://i.imgur.com/vUTRBHI.jpg" width=300/>
+<img src="https://i.imgur.com/yTz87IT.jpg" width=300/> <img src="https://i.imgur.com/gk5HG8G.jpg" width=300/>
+<img src="https://i.imgur.com/5yFRqjD.jpg" width=300/> <img src="https://i.imgur.com/CU1KI7o.jpg" width=300/>   
+<img src="https://i.imgur.com/oc40KQr.jpg" width=300/> <img src="https://i.imgur.com/OIbaE4R.jpg" width=300/>
+<img src="https://i.imgur.com/raLvdOu.jpg" width=300/> 
