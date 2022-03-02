@@ -18,6 +18,11 @@ Novel reading app on Android
 - [Glide](https://github.com/bumptech/glide)
 - [Facebook Shimmer](https://github.com/facebook/shimmer-android)
 
+### Features
+- Read online/offline
+- Save reading progress
+- Autoscroll option for reading book
+
 ### Screenshots
 <img src="https://i.imgur.com/nFQVmNM.jpg" width=300/> <img src="https://i.imgur.com/vUTRBHI.jpg" width=300/>
 <img src="https://i.imgur.com/yTz87IT.jpg" width=300/> <img src="https://i.imgur.com/gk5HG8G.jpg" width=300/>
